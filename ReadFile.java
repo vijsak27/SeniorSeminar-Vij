@@ -21,14 +21,14 @@ public class ReadFile{
 		try (Scanner reader = new Scanner(myFile)){
 			reader.nextLine();
 			while (reader.hasNextLine()){
-				String name = reader.nextLine();
-				String[] arr = name.split(",");
-				ArrayList<String> studentChoices = new ArrayList<String>();
-				studentChoices.add(arr[3]);
-				studentChoices.add(arr[4]);
-				studentChoices.add(arr[5]);
-				studentChoices.add(arr[6]);
-				studentChoices.add(arr[7]);
+				String line = reader.nextLine();
+				String[] arr = line.split(",");
+				ArrayList<Integer> studentChoices = new ArrayList<Integer>();
+				studentChoices.add(Integer.parseInt(arr[3]));
+				studentChoices.add(Integer.parseInt(arr[4]));
+				studentChoices.add(Integer.parseInt(arr[5]));
+				studentChoices.add(Integer.parseInt(arr[6]));
+				studentChoices.add(Integer.parseInt(arr[7]));
 				Student s1 = new Student(Integer.parseInt(arr[0]),arr[1], studentChoices);
 				students.add(s1);
 				System.out.println("Added: "+s1.getName()+"  ID: "+s1.getID() +" Student's choices: "+ studentChoices);
