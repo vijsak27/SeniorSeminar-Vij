@@ -6,7 +6,7 @@ public class Main{
 		rf1.loadData();
 		Schedule s1 = new Schedule();
 		s1.scheduleDetails();
-		s1.rankedPopularity();
+		s1.rankedPopularityAllSlots();
 	
 	}
 

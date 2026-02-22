@@ -37,11 +37,16 @@ public class Schedule{
 			
 		//}
 	}
-	public ArrayList rankedPopularity(){
-		ArrayList<ArrayList> choicesAllSlots = new ArrayList<ArrayList>();
-		ArrayList<int[]> popularitiesAcrossSlots = new ArrayList<int[]>();
-		ArrayList<Integer> mostPopularSessionsThisSlot = new ArrayList<Integer>();
-		ArrayList<ArrayList> po
+	public ArrayList rankedPopularityAllSlots(){
+		ArrayList<ArrayList> choicesAllSlots = new ArrayList<ArrayList>(); // all choices; all slots
+		ArrayList<int[]> popularitiesAcrossSlots = new ArrayList<int[]>();//numerical pop values all slots
+		ArrayList<Integer> rankedPopThisSlot = new ArrayList<Integer>();//stores the numerical value of popularity (number of students)
+		ArrayList<Integer> sessionsPopularityRankedThisSlot = new ArrayList<Integer>();//stores the sessionIDs (1-18) in ranked pop order
+		
+		ArrayList<ArrayList> rankedPopAllSlots = new ArrayList<ArrayList>();//numerical values of pop stored in 5 diff arraylists
+		ArrayList<ArrayList> sessPopAllSlots = new ArrayList<ArrayList>();//session IDs of popularity all slots (1-18 in this case)
+		
+		//ArrayList<ArrayList> po
 		for(int i = 0; i < numSlots; i++){
 			ArrayList choicesPerSlot = new ArrayList<Integer>();
 			int len = stuData.size();
@@ -70,22 +75,41 @@ public class Schedule{
 				}
 					popularityPerSession[a]=popularityCounter;//important note: popularityPerSession sarts at 0, so session 1 is at index 0
 					popularityCounter = 0;//reset to 0 for next timeslot calculations
+					
 			}
+			
 			popularitiesAcrossSlots.add(popularityPerSession);
-			System.out.println("popularitiesAcrossSlots: \n"+popularitiesAcrossSlots);
+			//System.out.println("popularitiesAcrossSlots: \n"+popularitiesAcrossSlots);//contains the popularity for each timeslot
+			//the above line contain popularity across all sessions (non-ranked)
 			
 			
 			
 		}
+		
+	
+		
 		for(int c = 0 ; c<sessPerSlot; c++){
-				int[] currTimeSlotPop = popularitiesAcrossSlots.get(c);
-				int arrayLength = currTimeSlotPop.length;
-				for(int i = 0; i<arrayLength; i++){
-					System.out.println(currTimeSlotPop[i]+" ");
-				}
-				System.out.println("Array Length: "+arrayLength);
-				int max = currTimeSlotPop[0];
-				int popularSessionIndex=0;
+		
+
+			int[] currTimeSlotPop = popularitiesAcrossSlots.get(c);
+			int arrayLength = currTimeSlotPop.length;
+			for(int i = 0; i<arrayLength; i++){
+				System.out.println(currTimeSlotPop[i]+" ");
+			}
+			System.out.println("Array Length: "+arrayLength);
+			
+			int max = currTimeSlotPop[0];
+			
+			
+			
+			System.out.println("Session being checked: "+(c+1));
+			System.out.println("Preloop max: "+max);
+			int popularSessionIndex=0;
+				
+			
+			for(int e = 0; e<numSessions; e++){
+
+			
 				for(int d = 0; d<arrayLength; d++){
 					if(currTimeSlotPop[d]>max){
 						max = currTimeSlotPop[d];
@@ -93,18 +117,32 @@ public class Schedule{
 						System.out.println("Current Index: "+d);
 						System.out.println("Current Max: "+max);
 						
+						
 					}
+
+
 				}
-				
-				System.out.println("Added Session ID: "+ (popularSessionIndex+1));
-				System.out.println("Popularity: "+max);
-				mostPopularSessions.add((popularSessionIndex+1));//adds session ID to the most popular sessions list
+				System.out.println(currTimeSlotPop[max]);
+				rankedPopThisSlot.add(currTimeSlotPop[max]);
+				sessionsPopularityRankedThisSlot.add(max);
+				//make sure same session isn't max again
 			}
-		System.out.println(choicesAllSlots+"\n\n\n\n");
-		System.out.println(popularitiesAcrossSlots.size());
-		System.out.println(mostPopularSessions+"\n\n\n\n");
-		return mostPopularSessions;	//need to work on logic of ranking popularity
+			currTimeSlotPop[max] = -1;
+			rankedPopAllSlots.add(rankedPopThisSlot);
+			sessPopAllSlots.add(sessionsPopularityRankedThisSlot);
+			//System.out.println("Added Session ID: "+ (popularSessionIndex+1) +" to time slot "+ (c+1));
+			//System.out.println("Popularity: "+max);
+			//rankedPopThisSlot.add((popularSessionIndex+1));//adds session ID to the most popular sessions list
+				
+		}
+		//System.out.println(choicesAllSlots+"\n\n\n\n");
+		//System.out.println(popularitiesAcrossSlots.size());
+		System.out.println(rankedPopAllSlots+"\n\n\n\n");
+		ArrayList<ArrayList> returnList = new ArrayList<ArrayList>();
+		returnList.add(rankedPopAllSlots);
+		returnList.add(sessPopAllSlots);
+		return returnList;	//need to work on logic of ranking popularity
 	}
 		
-		}
+}
 
