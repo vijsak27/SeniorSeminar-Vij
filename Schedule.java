@@ -85,7 +85,7 @@ public class Schedule{
 			
 			
 		}
-		
+		// at this point all of the choices should have been loaded and the popularities have been loaded
 	
 		
 		for(int c = 0 ; c<sessPerSlot; c++){
