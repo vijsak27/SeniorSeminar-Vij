@@ -88,13 +88,14 @@ public class Schedule{
 		// at this point all of the choices should have been loaded and the popularities have been loaded
 	
 		
-		for(int c = 0 ; c<sessPerSlot; c++){
+		for(int c = 0 ; c<numSlots; c++){
 		
 
 			int[] currTimeSlotPop = popularitiesAcrossSlots.get(c);
 			int arrayLength = currTimeSlotPop.length;
+			System.out.println("Currently finding max in this array");
 			for(int i = 0; i<arrayLength; i++){
-				System.out.println(currTimeSlotPop[i]+" ");
+				System.out.print(currTimeSlotPop[i]+", ");
 			}
 			System.out.println("Array Length: "+arrayLength);
 			
@@ -107,9 +108,9 @@ public class Schedule{
 			int popularSessionIndex=0;
 				
 			
-			for(int e = 0; e<numSessions; e++){
-
-			
+			for(int e = 0; e<sessPerSlot; e++){
+				max = currTimeSlotPop[0];
+				popularSessionIndex=0;
 				for(int d = 0; d<arrayLength; d++){
 					if(currTimeSlotPop[d]>max){
 						max = currTimeSlotPop[d];
@@ -122,12 +123,16 @@ public class Schedule{
 
 
 				}
-				System.out.println(currTimeSlotPop[max]);
-				rankedPopThisSlot.add(currTimeSlotPop[max]);
-				sessionsPopularityRankedThisSlot.add(max);
+				
+				//System.out.println(currTimeSlotPop[popularSessionIndex]);
+				rankedPopThisSlot.add(currTimeSlotPop[popularSessionIndex]);
+				System.out.println("Ranked popularity this slot: "+rankedPopThisSlot);
+				
+				sessionsPopularityRankedThisSlot.add((popularSessionIndex+1));
 				//make sure same session isn't max again
+				currTimeSlotPop[popularSessionIndex] = -1;
 			}
-			currTimeSlotPop[max] = -1;
+			
 			rankedPopAllSlots.add(rankedPopThisSlot);
 			sessPopAllSlots.add(sessionsPopularityRankedThisSlot);
 			//System.out.println("Added Session ID: "+ (popularSessionIndex+1) +" to time slot "+ (c+1));
