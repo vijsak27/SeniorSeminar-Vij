@@ -23,3 +23,9 @@ Journal Entry 1 (2/19):
 Today, I got the rankings to print out; however, the logic is not correctly working. I added to the rankedPopularity() method, which will be called in the Sort() method later on. 
 The logic is somewhat working (for instance in time slot one session 15 [the most popular one in time slot one] is ranked at number 1 and time slot 2 is ranked correctly at 2). however
 time slot 16 (which only has one appearance in the first time slot choices) appears incorrectly at rank 3.
+
+
+Journal Entry 2 (2/23):
+Today, I worked on debugging the ranking code. I have made progress with some of the rankings and have identified where the error is arising. I now need to spend some time tracing
+the code to see why the popularity max is not being correctly identified. The program does still compile, but the logic is not fully correct yet. Furthermore, I checked my the list that gets popularity
+per time slot (non-ranked) and they seem to be accurate. After fixing the popularity error, I will use the populairty to create the schedule.
