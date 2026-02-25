@@ -8,8 +8,8 @@ public class Schedule{
 	
 	public Schedule(){
 		ReadFile r1 = new ReadFile();
-		r1.loadData();
-		stuData = r1.getData();
+		r1.loadStudents();
+		stuData = r1.getStudents();
 	}
 	public void scheduleDetails(){
 		Scanner s1 = new Scanner(System.in);

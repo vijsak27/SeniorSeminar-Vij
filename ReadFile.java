@@ -68,7 +68,7 @@ public class ReadFile{
 		}
 	}
 	//getter function for the student data (in the students ArrayList)
-	public ArrayList getData(){
+	public ArrayList getStudents(){
 		return students;
 	}
 
