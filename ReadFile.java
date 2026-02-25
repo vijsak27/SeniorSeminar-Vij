@@ -3,6 +3,7 @@ import java.util.*;
 
 public class ReadFile{
 	private ArrayList<Student> students = new ArrayList<Student>();
+	private ArrayList<Session> sessions = new ArrayList<Session>();
 	
 	public ReadFile(){
 		
@@ -14,7 +15,7 @@ public class ReadFile{
 		}
 		return output;
 	}
-	public void loadData(){
+	public void loadStudents(){
 		String fileName = "numericalChoices.csv"; //enter name of file here
 		File myFile = new File(fileName);
 		
@@ -40,6 +41,26 @@ public class ReadFile{
 	}
 	public ArrayList getData(){
 		return students;
+	}
+
+
+	public void loadSessions(){
+		String fileName = "SrSeminar_RawData (2) - Speaker List.csv"; //enter name of file here
+		File myFile = new File(fileName);
+		
+		try (Scanner reader = new Scanner(myFile)){
+			reader.nextLine();
+			while (reader.hasNextLine()){
+				String line = reader.nextLine();
+				String[] arr = line.split(",");
+				Session s1 = new Session(Integer.parseInt(arr[1]),arr[0],arr[2]);
+				sessions.add(s1);
+				System.out.println("Added session with ID: "+s1.getID());
+			}
+		} catch (FileNotFoundException e){
+			System.out.println("Error!!!");
+			e.printStackTrace();
+		}
 	}
 
 		
