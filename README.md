@@ -22,10 +22,12 @@ The attached CSV/Spreadsheet file is the result of sending out a google form and
 Journal Entry 1 (2/19):
 Today, I got the rankings to print out; however, the logic is not correctly working. I added to the rankedPopularity() method, which will be called in the Sort() method later on. 
 The logic is somewhat working (for instance in time slot one session 15 [the most popular one in time slot one] is ranked at number 1 and time slot 2 is ranked correctly at 2). however
-time slot 16 (which only has one appearance in the first time slot choices) appears incorrectly at rank 3.
+time slot 16 (which only has one appearance in the first time slot choices) appears incorrectly at rank 3. 
 
 
 Journal Entry 2 (2/23):
 Today, I worked on debugging the ranking code. I have made progress with some of the rankings and have identified where the error is arising. I now need to spend some time tracing
 the code to see why the popularity max is not being correctly identified. The program does still compile, but the logic is not fully correct yet. Furthermore, I checked my the list that gets popularity
-per time slot (non-ranked) and they seem to be accurate. After fixing the popularity error, I will use the populairty to create the schedule.
+per time slot (non-ranked) and they seem to be accurate. After fixing the popularity error, I will use the populairty to create the schedule. I believe that the error is arising in the logic of the for loop I have implemented to find the 
+maximum in the array that contains all of the popularities of all of the session for the time slot being analyzed. I believe that next steps will include
+continuing to add print statements to trace the values of all of the variables I am using in order to identifiy where the program is going wrong and how I can alter the code to avoid the logical errors in my looping and ranking logic currently.

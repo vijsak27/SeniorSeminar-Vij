@@ -46,7 +46,7 @@ public class Schedule{
 		ArrayList<ArrayList> rankedPopAllSlots = new ArrayList<ArrayList>();//numerical values of pop stored in 5 diff arraylists
 		ArrayList<ArrayList> sessPopAllSlots = new ArrayList<ArrayList>();//session IDs of popularity all slots (1-18 in this case)
 		
-		//ArrayList<ArrayList> po
+
 		for(int i = 0; i < numSlots; i++){
 			ArrayList choicesPerSlot = new ArrayList<Integer>();
 			int len = stuData.size();
@@ -58,7 +58,7 @@ public class Schedule{
 				choicesPerSlot.add(choiceThisSlot);
 				
 			}
-			//rankedPerSlot.sort(null);
+		
 			choicesAllSlots.add(choicesPerSlot);
 			//int sessionNum = choicesPerSlot.get(0);//first element in the list of choices for one time slot
 			int popularityCounter = 0;
