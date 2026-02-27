@@ -86,6 +86,7 @@ public class ReadFile{
 			while (reader.hasNextLine()){
 				String line = reader.nextLine();
 				String[] arr = line.split(",");//split the line along the commas
+				System.out.println("Split length: "+arr.length);
 				Session s1 = new Session(Integer.parseInt(arr[1]),arr[0],arr[2]);//create a new session object containing ID, session name, and presenter name
 				sessions.add(s1);//add the session object to the sessions ArrayList
 				System.out.println("Added session with ID: "+s1.getID());//print that session has been added
