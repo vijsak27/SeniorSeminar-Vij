@@ -31,3 +31,9 @@ the code to see why the popularity max is not being correctly identified. The pr
 per time slot (non-ranked) and they seem to be accurate. After fixing the popularity error, I will use the populairty to create the schedule. I believe that the error is arising in the logic of the for loop I have implemented to find the 
 maximum in the array that contains all of the popularities of all of the session for the time slot being analyzed. I believe that next steps will include
 continuing to add print statements to trace the values of all of the variables I am using in order to identifiy where the program is going wrong and how I can alter the code to avoid the logical errors in my looping and ranking logic currently.
+
+
+Journal Entry 3 (2/27):
+Today, I spent time working on resolving an error that came up with regards to the file that I was uploading for the numerial IDs of the sessions that will be included in the senior seminar event. The error arising was that splitting the Scanner.nextLine() function stored in the variable line. The 
+fix that I implemented today involved editing the original file to mitigate any potential errors in the line splitting. The error was resolved by the end of the day
+and the file is now correctly uploading all data.
