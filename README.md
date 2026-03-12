@@ -37,3 +37,10 @@ Journal Entry 3 (2/27):
 Today, I spent time working on resolving an error that came up with regards to the file that I was uploading for the numerial IDs of the sessions that will be included in the senior seminar event. The error arising was that splitting the Scanner.nextLine() function stored in the variable line. The 
 fix that I implemented today involved editing the original file to mitigate any potential errors in the line splitting. The error was resolved by the end of the day
 and the file is now correctly uploading all data.
+
+Journal Entry 4 (3/13):
+Today, I finished identifying the error in the ranking error. The error entailed the program mistankenly finding only the top 1 session in popularity across all time slots rathers than the top 5 in the current time slot
+. To fix the error, I have included another for loop outside my ranking loop that will ensure that the code finds the top 5 rather than just the top 1 session in popularity. Furthermore, I spent time adding some debugging 
+lines to fix another logic error that I believe was arising due to code structure and sequence. Currently, the code runs, but the logic of the ranking has not been fully fixed. I was able to get the program
+to run properly once, but I am currently working on making the ranking method more compatible with the rest of my code by adding the ranked popularities to another ArrayList that other parts of the code can access 
+when creating the schedule for the day.
