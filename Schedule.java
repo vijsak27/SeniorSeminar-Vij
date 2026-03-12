@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class Schedule{
 	private int numSlots;
 	private int sessPerSlot;
@@ -93,7 +94,7 @@ public class Schedule{
 
 			int[] currTimeSlotPop = popularitiesAcrossSlots.get(c);
 			int arrayLength = currTimeSlotPop.length;
-			System.out.println("Currently finding max in this array");
+			System.out.println("Currently finding top 5 in this array");
 			for(int i = 0; i<arrayLength; i++){
 				System.out.print(currTimeSlotPop[i]+", ");
 			}
@@ -101,37 +102,47 @@ public class Schedule{
 			
 			int max = currTimeSlotPop[0];
 			
-			
-			
 			System.out.println("Session being checked: "+(c+1));
 			System.out.println("Preloop max: "+max);
 			int popularSessionIndex=0;
+			for(int q = 0 ; q<sessPerSlot;q++){
 				
-			
-			for(int e = 0; e<sessPerSlot; e++){
-				max = currTimeSlotPop[0];
-				popularSessionIndex=0;
-				for(int d = 0; d<arrayLength; d++){
-					if(currTimeSlotPop[d]>max){
-						max = currTimeSlotPop[d];
-						popularSessionIndex = d;
-						System.out.println("Current Index: "+d);
-						System.out.println("Current Max: "+max);
-						
-						
+				for(int e = 0; e<numSessions; e++){
+					max = currTimeSlotPop[0];
+					popularSessionIndex=0;
+					for(int d = 0; d<arrayLength; d++){
+						if(currTimeSlotPop[d]>max){
+							max = currTimeSlotPop[d];
+							popularSessionIndex = d;
+							System.out.println("Current Index: "+d);
+							System.out.println("Current Max: "+max);
+						}
 					}
-
-
 				}
 				
+				System.out.println("Max from this slot: " + (popularSessionIndex+1));
 				//System.out.println(currTimeSlotPop[popularSessionIndex]);
 				rankedPopThisSlot.add(currTimeSlotPop[popularSessionIndex]);
-				System.out.println("Ranked popularity this slot: "+rankedPopThisSlot);
 				
+				rankedPopAllSlots.add(rankedPopThisSlot);
+				sessPopAllSlots.add(sessionsPopularityRankedThisSlot);
+				
+				
+						
 				sessionsPopularityRankedThisSlot.add((popularSessionIndex+1));
 				//make sure same session isn't max again
 				currTimeSlotPop[popularSessionIndex] = -1;
+				sessionsPopularityRankedThisSlot
+				//empty the ranked lists to prepare for next slot
+				rankedPopThisSlot = clear(rankedPopThisSlot);
+				sessionsPopularityRankedThisSlot= clear(sessionsPopularityRankedThisSlot);
+				
+				
 			}
+			
+			
+			System.out.println("Ranked popularity this slot: "+rankedPopThisSlot);
+			System.out.println("Sessions ranked this slot: "+sessionsPopularityRankedThisSlot);
 			
 			rankedPopAllSlots.add(rankedPopThisSlot);
 			sessPopAllSlots.add(sessionsPopularityRankedThisSlot);
@@ -147,6 +158,14 @@ public class Schedule{
 		returnList.add(rankedPopAllSlots);
 		returnList.add(sessPopAllSlots);
 		return returnList;	//need to work on logic of ranking popularity
+	}
+	
+	
+	public ArrayList clear(ArrayList a){
+		for(int i = 0; i<a.size(); i++){
+			a.remove(i);
+		}
+		return a;
 	}
 		
 }
