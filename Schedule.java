@@ -26,25 +26,22 @@ public class Schedule{
 		schedule = new int[numSlots][sessPerSlot];
 	}
 	
-	public void Sort(){
-		
-		
-		//for(int i = 0; i<stuChoices.size(); i++){
-			
-			//get populatiry list
-			
-			
-			
-			
-		//}
+	public void sort(){
+		ArrayList<ArrayList<ArrayList<Integer>>> rankedPopularity = rankedPopularityAllSlots();
+		for (int slot = 0; slot<numSlots; slot++){
+			for (int session = 0; session<sessPerSlot; session++){
+				schedule[slot][session] = rankedPopularity.get(1).get(slot).get(session);
+			}
+		}
 	}
-	public ArrayList rankedPopularityAllSlots(){
+	
+	public ArrayList<ArrayList<ArrayList<Integer>>> rankedPopularityAllSlots(){
 		ArrayList<ArrayList> choicesAllSlots = new ArrayList<ArrayList>(); // all choices; all slots
 		ArrayList<int[]> popularitiesAcrossSlots = new ArrayList<int[]>();//numerical pop values all slots
 	
 		
-		ArrayList<ArrayList> rankedPopAllSlots = new ArrayList<ArrayList>();//numerical values of pop stored in 5 diff arraylists
-		ArrayList<ArrayList> sessPopAllSlots = new ArrayList<ArrayList>();//session IDs of popularity all slots (1-18 in this case)
+		ArrayList<ArrayList<Integer>> rankedPopAllSlots = new ArrayList<>();//numerical values of pop stored in 5 diff arraylists
+		ArrayList<ArrayList<Integer>> sessPopAllSlots = new ArrayList<>();//session IDs of popularity all slots (1-18 in this case)
 		
 
 		for(int i = 0; i < numSlots; i++){
@@ -127,18 +124,25 @@ public class Schedule{
 		}
 
 		System.out.println(sessPopAllSlots+"\n\n\n\n");
-		ArrayList<ArrayList> returnList = new ArrayList<ArrayList>();
-		returnList.add(rankedPopAllSlots);
-		returnList.add(sessPopAllSlots);
+		ArrayList<ArrayList<ArrayList<Integer>>> returnList = new ArrayList<>();
+		returnList.add(rankedPopAllSlots);//first add all the actual popularity value
+		returnList.add(sessPopAllSlots);//sessions ranked by popularity
+		System.out.println(returnList);
 		return returnList;	
 	}
 	
 	
-	public ArrayList clear(ArrayList a){
-		for(int i = 0; i<a.size(); i++){
-			a.remove(i);
+	public String toString(){
+		String output = "";
+		
+		for(int r = 0 ; r<numSlots;r++){
+			for(int c = 0 ; c<sessPerSlot; c++){
+				output+=(schedule[r][c]+" ");
+			}
+			output+=("\n");
 		}
-		return a;
+		
+		return output;
 	}
 		
 }
