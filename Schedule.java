@@ -3,14 +3,17 @@ import java.util.*;
 public class Schedule{
 	private int numSlots;
 	private int sessPerSlot;
-	private int[][] schedule;
+	private Session[][] schedule;
 	private ArrayList<Student> stuData;
+	private ArrayList<Session> sessions;
 	private int numSessions;
 	
 	public Schedule(){
 		ReadFile r1 = new ReadFile();
 		r1.loadStudents();
 		stuData = r1.getStudents();
+		r1.loadSessions();
+		sessions=r1.getSessions();
 	}
 	public void scheduleDetails(){
 		Scanner s1 = new Scanner(System.in);
@@ -22,16 +25,23 @@ public class Schedule{
 		s1.nextLine();
 		System.out.println("How many sessions will you offer in total?");
 		numSessions = s1.nextInt();
-		s1.close();
-		schedule = new int[numSlots][sessPerSlot];
+		schedule = new Session[numSlots][sessPerSlot];
 	}
 	
 	public void sort(){
+		
+		
 		ArrayList<ArrayList<ArrayList<Integer>>> rankedPopularity = rankedPopularityAllSlots();
+		
 		for (int slot = 0; slot<numSlots; slot++){
 			for (int session = 0; session<sessPerSlot; session++){
-				schedule[slot][session] = rankedPopularity.get(1).get(slot).get(session);
+				for(int i = 0 ; i<numSessions; i++){
+					if(rankedPopularity.get(1).get(slot).get(session)==sessions.get(i).getID()){
+						schedule[slot][session] = sessions.get(i);
+					}
+				}
 			}
+		
 		}
 	}
 	
@@ -130,6 +140,18 @@ public class Schedule{
 		System.out.println(returnList);
 		return returnList;	
 	}
+	/*
+	public int assignStudents(){
+		for(int slot = 0; slot<numSlots; slot++){
+			for(int student = 0; student<stuData.size(); student++){
+				if(stuData.get(student))
+			}
+		}
+	}
+	public int calculateConflicts(){
+		
+		}
+		*/
 	
 	
 	public String toString(){
@@ -137,7 +159,7 @@ public class Schedule{
 		
 		for(int r = 0 ; r<numSlots;r++){
 			for(int c = 0 ; c<sessPerSlot; c++){
-				output+=(schedule[r][c]+" ");
+				output+=(schedule[r][c].getID()+" ");
 			}
 			output+=("\n");
 		}
