@@ -44,3 +44,20 @@ Today, I finished identifying the error in the ranking error. The error entailed
 lines to fix another logic error that I believe was arising due to code structure and sequence. Currently, the code runs, but the logic of the ranking has not been fully fixed. I was able to get the program
 to run properly once, but I am currently working on making the ranking method more compatible with the rest of my code by adding the ranked popularities to another ArrayList that other parts of the code can access 
 when creating the schedule for the day.
+
+
+Journal Entry 5 (3/27):
+Today, I finally fixed the bug in the popularity ranking code. I was mistakenly adding the ranked popularity for each slot to the overall list to early (before the popularity had been ranked).
+Furthermore, I had unnecessary loops that were no needed in the program and I went through an removed those to improve code efficiency.
+I also made an update in my apporach to the project. Rather than only ranking the top 5 in each slot, I generated the ranked popularity of all the session in a slot. I did this
+because I wanted to account for the case in which a session has already been used twice, so I can't use the same session again. If this happens, I can iterate to the next most popular session and include that instead.
+I then went on to start to organize the schedule to generate a schedule (currently does not adhere to the 2 times a session can repeat rules, this will be done tomorrow). I also added a methodolgoy to calculate conflicts and currently have 115 conflicts based ont he scedhuel that does not follow all project rules.
+
+Journal Entry 6 (3/28):
+Today, I altered my assignStudents method and sort methods mainly to ensure they comply with the rules (max 16 per session and max 2 times a session can be repeated). 
+The code does run now. I am also eable to generate individual student schedules and overall session rosters. I have one error that is arising with student 68 in particular.
+This student seems to only have 4 assigned sessions (even though my code requires that the length of a student's schedule must be at least 5). Furthermore, this student 
+appears in two places at the same time as per my output logs that contian the roster for each session. I am not yet completely sure as to why the error is arising.
+I will continue to sort through my code and identify where this error is arising from. The code currently is able to create a schedule, assign the students correctly (with the exception of student 68) and print out
+the rosters of each session. I also updated my session objects to make a function called getNumStudents() and a separte method called getStudents() which return the student objects rather than the number
+of student in a session to allow for more informational printing of session rosters and more student accessbility from the session object.
