@@ -31,5 +31,17 @@ public class Session{
     public int getStudents(){
 		return numStudents;
 	}
+	
+	public void addStudent(){
+		numStudents++;
+	}
+	
+	public String getName(){
+		return sessionName;
+	}
+	
+	public String getPresenter(){
+		return presenterName;
+	}
     
 }

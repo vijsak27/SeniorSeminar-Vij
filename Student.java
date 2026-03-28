@@ -5,6 +5,7 @@ public class Student{
 	private String name;
 	private ArrayList<Integer> choices = new ArrayList<Integer>();
 	private ArrayList<Integer> schedule = new ArrayList<Integer>();//this wil contain the room numbers in time slots
+	
 	public Student(int id, String n, ArrayList c){
 		ID = id;
 		name = n;
@@ -21,5 +22,17 @@ public class Student{
 	public ArrayList getChoices(){
 		return choices;
 	}
+	public ArrayList<Integer> getSchedule(){
+		return schedule;
+	}
+	public void addToSchedule(int sessionID){
+		schedule.add(sessionID);
+	}
+	public String toString() {
+		String output = "";
+		output = name+", "+ID+"\nSchedule: "+schedule;
+		return output;
+	}
+
 	
 }

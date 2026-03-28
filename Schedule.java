@@ -7,6 +7,7 @@ public class Schedule{
 	private ArrayList<Student> stuData;
 	private ArrayList<Session> sessions;
 	private int numSessions;
+	private int maxCapacity;
 	
 	public Schedule(){
 		ReadFile r1 = new ReadFile();
@@ -25,7 +26,11 @@ public class Schedule{
 		s1.nextLine();
 		System.out.println("How many sessions will you offer in total?");
 		numSessions = s1.nextInt();
+		s1.nextLine();
+		System.out.println("How many student will be allowed in one session?");
+		maxCapacity = s1.nextInt();
 		schedule = new Session[numSlots][sessPerSlot];
+		
 	}
 	
 	public void sort(){
@@ -37,7 +42,8 @@ public class Schedule{
 			for (int session = 0; session<sessPerSlot; session++){
 				for(int i = 0 ; i<numSessions; i++){
 					if(rankedPopularity.get(1).get(slot).get(session)==sessions.get(i).getID()){
-						schedule[slot][session] = sessions.get(i);
+						Session originial = sessions.get(i);
+						schedule[slot][session] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
 					}
 				}
 			}
@@ -133,25 +139,112 @@ public class Schedule{
 			sessPopAllSlots.add(sessionsPopularityRankedThisSlot);	
 		}
 
-		System.out.println(sessPopAllSlots+"\n\n\n\n");
+		
 		ArrayList<ArrayList<ArrayList<Integer>>> returnList = new ArrayList<>();
 		returnList.add(rankedPopAllSlots);//first add all the actual popularity value
 		returnList.add(sessPopAllSlots);//sessions ranked by popularity
-		System.out.println(returnList);
+		
 		return returnList;	
 	}
-	/*
+	
+	
+	
+	
 	public int assignStudents(){
+		int totalConflicts = 0;
+		
+		
 		for(int slot = 0; slot<numSlots; slot++){
-			for(int student = 0; student<stuData.size(); student++){
-				if(stuData.get(student))
+			for (Student currentStudent : stuData){
+				boolean assignedThisSlot = false;
+				ArrayList<Integer> stuChoices = currentStudent.getChoices();
+				
+				for(int choice : stuChoices){
+				
+					boolean alreadyTaken = false;
+					for(int session = 0; session<currentStudent.getSchedule().size(); session++){
+						
+						if(currentStudent.getSchedule().get(session)==choice){
+							alreadyTaken=true;
+						}
+					}
+					
+					if(alreadyTaken){
+						continue; //the student already has the session so dont assing it again
+					}
+						
+				
+				
+					for(int room = 0; room<sessPerSlot; room++){//loops throuhg all 5 "rooms" used per slot
+						Session sessionAtCurrLocation = schedule[slot][room];
+						if(sessionAtCurrLocation.getID()==choice && sessionAtCurrLocation.getStudents()<maxCapacity){
+							sessionAtCurrLocation.addStudent();
+							currentStudent.addToSchedule(choice);
+							assignedThisSlot=true;
+							break; //stop looking for assignments in this slot (since already assigned)
+						}
+					}
+					
+					if(assignedThisSlot){
+						break; //becuase already assigned and got high preference 
+					}
+				
 			}
-		}
-	}
-	public int calculateConflicts(){
+				if(assignedThisSlot==false){
+					totalConflicts++;
+					//fill in slot with another session
+					for(int room = 0; room< sessPerSlot; room ++){
+						Session fillInSession = schedule[slot][room];
+						boolean fillInSessionAlreadyTaken =false;
+						
+				
+						
+							for(int session = 0; session<currentStudent.getSchedule().size(); session++){
+								
+								if(currentStudent.getSchedule().get(session)==fillInSession.getID()){
+									fillInSessionAlreadyTaken=true;
+								}
+							}
+							
+							
+							if(!fillInSessionAlreadyTaken && fillInSession.getStudents()<maxCapacity){
+								fillInSession.addStudent();
+								currentStudent.addToSchedule(fillInSession.getID());
+								assignedThisSlot=true;
+								break; //stop looking for assignments in this slot (since already assigned)
+							}
+							
+							
+
+				}	
+				
+				
+				}
+			
+		
 		
 		}
-		*/
+		
+	
+		}
+		
+		
+		
+		
+		for(Student student: stuData){
+			System.out.println(student);
+		}
+		System.out.println("Total Conflicts: "+totalConflicts);
+		
+		return totalConflicts;
+		
+	}
+	
+	
+	public int calculateConflicts(){
+		return 0;
+	}
+		
 	
 	
 	public String toString(){
