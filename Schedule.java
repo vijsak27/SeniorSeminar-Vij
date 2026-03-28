@@ -37,16 +37,33 @@ public class Schedule{
 		
 		
 		ArrayList<ArrayList<ArrayList<Integer>>> rankedPopularity = rankedPopularityAllSlots();
+		int[] sessionCounts = new int[numSessions];
 		
 		for (int slot = 0; slot<numSlots; slot++){
-			for (int session = 0; session<sessPerSlot; session++){
-				for(int i = 0 ; i<numSessions; i++){
-					if(rankedPopularity.get(1).get(slot).get(session)==sessions.get(i).getID()){
+			
+			ArrayList<Integer> popularityThisSlot = rankedPopularity.get(1).get(slot);
+		
+			int sessionsFilled = 0;
+			int rankIndex = 0; //starts at the first most popular session (included this to account for sessions already booked twice);
+			
+			
+			while(sessionsFilled<sessPerSlot){
+				int sessionID = popularityThisSlot.get(rankIndex);
+				
+				if(sessionCounts[sessionID-1]<2){
+					for(int i = 0 ; i<numSessions; i++){
+					if(sessionID == sessions.get(i).getID()){
+						
 						Session originial = sessions.get(i);
-						schedule[slot][session] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
+						schedule[slot][sessionsFilled] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
+						sessionCounts[sessionID-1]++;
+						sessionsFilled++;
 					}
 				}
+				}
+				rankIndex++;
 			}
+			
 		
 		}
 	}
@@ -177,8 +194,8 @@ public class Schedule{
 				
 					for(int room = 0; room<sessPerSlot; room++){//loops throuhg all 5 "rooms" used per slot
 						Session sessionAtCurrLocation = schedule[slot][room];
-						if(sessionAtCurrLocation.getID()==choice && sessionAtCurrLocation.getStudents()<maxCapacity){
-							sessionAtCurrLocation.addStudent();
+						if(sessionAtCurrLocation.getID()==choice && sessionAtCurrLocation.getNumStudents()<maxCapacity){
+							sessionAtCurrLocation.addStudent(currentStudent);
 							currentStudent.addToSchedule(choice);
 							assignedThisSlot=true;
 							break; //stop looking for assignments in this slot (since already assigned)
@@ -204,8 +221,8 @@ public class Schedule{
 								}
 							}
 														
-							if(!fillInSessionAlreadyTaken && fillInSession.getStudents()<maxCapacity){
-								fillInSession.addStudent();
+							if(!fillInSessionAlreadyTaken && fillInSession.getNumStudents()<maxCapacity){
+								fillInSession.addStudent(currentStudent);
 								currentStudent.addToSchedule(fillInSession.getID());
 								assignedThisSlot=true;
 								break; //stop looking for assignments in this slot (since already assigned)
@@ -221,13 +238,48 @@ public class Schedule{
 		}
 		System.out.println("Total Conflicts: "+totalConflicts);
 		
+		
+		for(Student student:stuData){
+			if(student.getSchedule().size()<5){
+				while(student.getSchedule().size()<5){
+					for(int slot = 0; slot<numSlots; slot++){
+						for(int session = 0; session<sessPerSlot; session++){
+							if(schedule[slot][session].getNumStudents()<maxCapacity){
+								student.addToSchedule(schedule[slot][session].getID());
+								schedule[slot][session].addStudent(student);
+								break; //don't add to more sessions in same time slot
+							}
+						}
+					}
+				}
+			}
+		
+		}
+		
+		
+		
 		return totalConflicts;
+		
+		
 		
 	}
 	
 	
-	public int calculateConflicts(){
-		return 0;
+	
+	
+	public void showSessionRosters(){
+		for(int slot = 0; slot<numSlots; slot++){
+			for(int session = 0; session<sessPerSlot; session++){
+				System.out.println("Slot: "+slot+", Session: "+session + "\n\nRosterIDs: ");
+				for(Student student: schedule[slot][session].getStudents()){
+					System.out.print(student.getID()+" ");
+				}
+				System.out.println("Session size: "+schedule[slot][session].getNumStudents());
+				System.out.print("\n\n");
+			}
+		}
+		
+	
 	}
 		
 	

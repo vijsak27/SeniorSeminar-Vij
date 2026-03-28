@@ -7,12 +7,15 @@ The Session object will contain 4 pieces of info (as of now)
 4. numStudents
 */
 
+import java.util.*;
+
 public class Session{
     //variables contained in session
     private int sessionID;
     private String sessionName;
     private String presenterName;
     private int numStudents;
+    private ArrayList<Student> students = new ArrayList<Student>();
     
     //constructor
     public Session(int ID, String name, String presenter){
@@ -27,12 +30,17 @@ public class Session{
         return sessionID;
     }
     
+    public ArrayList<Student> getStudents(){
+		return students;
+	}
     
-    public int getStudents(){
+    
+    public int getNumStudents(){
 		return numStudents;
 	}
 	
-	public void addStudent(){
+	public void addStudent(Student s){
+		students.add(s);
 		numStudents++;
 	}
 	

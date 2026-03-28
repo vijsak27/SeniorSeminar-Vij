@@ -16,6 +16,7 @@ public class Main{
 		s1.sort();
 		s1.assignStudents();
 		System.out.println(s1);
+		s1.showSessionRosters();
 	
 	}
 
