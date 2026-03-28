@@ -196,41 +196,26 @@ public class Schedule{
 					for(int room = 0; room< sessPerSlot; room ++){
 						Session fillInSession = schedule[slot][room];
 						boolean fillInSessionAlreadyTaken =false;
-						
-				
-						
+																
 							for(int session = 0; session<currentStudent.getSchedule().size(); session++){
 								
 								if(currentStudent.getSchedule().get(session)==fillInSession.getID()){
 									fillInSessionAlreadyTaken=true;
 								}
 							}
-							
-							
+														
 							if(!fillInSessionAlreadyTaken && fillInSession.getStudents()<maxCapacity){
 								fillInSession.addStudent();
 								currentStudent.addToSchedule(fillInSession.getID());
 								assignedThisSlot=true;
 								break; //stop looking for assignments in this slot (since already assigned)
 							}
-							
-							
-
+														
 				}	
-				
-				
-				}
-			
-		
-		
-		}
-		
-	
-		}
-		
-		
-		
-		
+								
+			}							
+		}	
+		}				
 		for(Student student: stuData){
 			System.out.println(student);
 		}
