@@ -216,7 +216,7 @@ public class Schedule{
 																
 							for(int session = 0; session<currentStudent.getSchedule().size(); session++){
 								
-								if(currentStudent.getSchedule().get(session)==fillInSession.getID()){
+								if((currentStudent.getSchedule().get(session))==fillInSession.getID()){
 									fillInSessionAlreadyTaken=true;
 								}
 							}
@@ -240,8 +240,8 @@ public class Schedule{
 		
 		
 		for(Student student:stuData){
-			if(student.getSchedule().size()<5){
-				while(student.getSchedule().size()<5){
+			if(student.getSchedule().size()<numSlots){
+				while(student.getSchedule().size()<numSlots){
 					for(int slot = 0; slot<numSlots; slot++){
 						for(int session = 0; session<sessPerSlot; session++){
 							if(schedule[slot][session].getNumStudents()<maxCapacity){
