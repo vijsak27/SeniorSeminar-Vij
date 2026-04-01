@@ -224,9 +224,15 @@ public class Schedule{
 					if(assignedThisSlot){
 						break; //becuase already assigned and got high preference 
 					}
-				
+
 			}
-				if(assignedThisSlot==false){
+				boolean noChoices = true;
+				for(int i = 0; i<stuChoices.size();i++){
+					if(stuChoices.get(i)!=0){
+						noChoices = false;
+					}
+				}
+				if(assignedThisSlot==false && !noChoices){
 					totalConflicts++;
 					//fill in slot with another session
 					for(int room = 0; room< sessPerSlot; room ++){
@@ -301,7 +307,21 @@ public class Schedule{
 	
 	}
 		
-	
+	public void schedule(boolean custom){
+		scheduleDetails();
+		rankedPopularityAllSlots();
+		if(custom){
+			customSchedule();
+		}
+		else{
+			sort();
+		}
+		int conflicts = assignStudents();
+		showSessionRosters();
+		System.out.println(toString());
+		System.out.println("Total Conflicts: "+ conflicts);
+		System.out.println("Average conflicts per student: "+((double)conflicts/stuData.size()));
+	}
 	
 	public String toString(){
 		String output = "";
@@ -312,6 +332,8 @@ public class Schedule{
 			}
 			output+=("\n");
 		}
+		
+		
 		
 		return output;
 	}
