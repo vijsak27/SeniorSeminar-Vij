@@ -33,6 +33,25 @@ public class Schedule{
 		
 	}
 	
+	public void customSchedule(){
+		int[][] customSchedule = {{1,9,14,5,15},
+					{2,6,10,12,16},
+					{15,3,11,4,7},
+					{16,18,13,1,9},
+					{7,8,17,2,6}};
+					
+		for (int row = 0; row<numSlots; row++){
+			for(int col = 0; col<sessPerSlot; col++){
+				for(int session = 0; session<numSessions; session++){
+					if(customSchedule[row][col]==sessions.get(session).getID()){
+						Session originial = sessions.get(session);
+						schedule[row][col] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
+					}
+				}
+			}
+		}
+	}
+	
 	public void sort(){
 		
 		
