@@ -61,3 +61,9 @@ appears in two places at the same time as per my output logs that contian the ro
 I will continue to sort through my code and identify where this error is arising from. The code currently is able to create a schedule, assign the students correctly (with the exception of student 68) and print out
 the rosters of each session. I also updated my session objects to make a function called getNumStudents() and a separte method called getStudents() which return the student objects rather than the number
 of student in a session to allow for more informational printing of session rosters and more student accessbility from the session object.
+
+Journal Entry 7 (4/1):
+Today, I added in a customScheulde() method that allows a user to implement a custom schedule rather than the algorithm directl computing the optimized schedule. Using the schedule offered on the board in class the number of error found was 102.
+I was also able to reduce the number of errors that arose during the optimization of the scheudle since I identified an error in the calcuation of the total conflicts. I was overcounting the number of conflicts because 5 students at the end of the list did not provide any choices.
+After I removed the error in the conflict calculcation, the number of conflicts identified fell to 114 and the average number of conflicts was about 1.5 per student. I am still encountering an error with student 68 in particular. The student is assigned twice in one session
+and only has assignments in 4/5 of the slots. I will continue to debug to correct this error and continue optimizatino across the different slots in order to reduce the conflicts further.
