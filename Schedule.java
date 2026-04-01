@@ -16,6 +16,7 @@ public class Schedule{
 		r1.loadSessions();
 		sessions=r1.getSessions();
 	}
+	
 	public void scheduleDetails(){
 		Scanner s1 = new Scanner(System.in);
 		System.out.println("How many time slots are you offering?");
@@ -34,7 +35,8 @@ public class Schedule{
 	}
 	
 	public void customSchedule(){
-		int[][] customSchedule = {{1,9,14,5,15},
+		int[][] customSchedule = 
+					{{1,9,14,5,15},
 					{2,6,10,12,16},
 					{15,3,11,4,7},
 					{16,18,13,1,9},
@@ -222,7 +224,7 @@ public class Schedule{
 					}
 					
 					if(assignedThisSlot){
-						break; //becuase already assigned and got high preference 
+						break; //becuase already assigned and got high preferences 
 					}
 
 			}

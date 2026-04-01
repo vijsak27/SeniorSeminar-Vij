@@ -59,7 +59,7 @@ public class ReadFile{
 				//create a new student object with the studentChoices from the ArrayList and include the name and ID
 				Student s1 = new Student(Integer.parseInt(arr[0]),arr[1], studentChoices);
 				students.add(s1); // add the student to the general ArrayList containing the students
-				System.out.println("Added: "+s1.getName()+"  ID: "+s1.getID() +" Student's choices: "+ studentChoices);//pirnt out that student has been added
+				//System.out.println("Added: "+s1.getName()+"  ID: "+s1.getID() +" Student's choices: "+ studentChoices);//pirnt out that student has been added
 
 			}
 		} catch (FileNotFoundException e){//print out if error occurs
@@ -86,10 +86,10 @@ public class ReadFile{
 			while (reader.hasNextLine()){
 				String line = reader.nextLine();
 				String[] arr = line.split(",");//split the line along the commas
-				System.out.println("Split length: "+arr.length);
+				//System.out.println("Split length: "+arr.length);
 				Session s1 = new Session(Integer.parseInt(arr[1]),arr[0],arr[2]);//create a new session object containing ID, session name, and presenter name
 				sessions.add(s1);//add the session object to the sessions ArrayList
-				System.out.println("Added session with ID: "+s1.getID());//print that session has been added
+				//System.out.println("Added session with ID: "+s1.getID());//print that session has been added
 			}
 		} catch (FileNotFoundException e){
 			System.out.println("Error!!!");//print if error occurs
