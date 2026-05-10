@@ -200,16 +200,16 @@ public class Schedule{
 		
 		int len = stuData.size();
 		for(int i = 0; i<len-1; i++){
-			int popularChoicesStudentIndex = i;
+			int nicheChoicesStudentIndex = i;
 			for(int n = i+1; n< len; n++){
-				if(demand[stuData.get(n).getChoices().get(0)]>demand[stuData.get(i).getChoices().get(0)]){
-					popularChoicesStudentIndex = n;
+				if(demand[stuData.get(n).getChoices().get(0)]<demand[stuData.get(nicheChoicesStudentIndex).getChoices().get(0)]){
+					nicheChoicesStudentIndex = n;
 				}
 			}
 			
 			//swap the students and move the stundet with more niche choices forward in the stuData ArrayList
-			Student temp = stuData.get(popularChoicesStudentIndex);
-			stuData.set(popularChoicesStudentIndex, stuData.get(i));
+			Student temp = stuData.get(nicheChoicesStudentIndex);
+			stuData.set(nicheChoicesStudentIndex, stuData.get(i));
 			stuData.set(i,temp);
 			
 		}
