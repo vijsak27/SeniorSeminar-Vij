@@ -188,7 +188,27 @@ public class Schedule{
 	}
 	
 	
-	
+	public prioritySortStudents() {
+		int demand[] = new int[numSessions+1]; //+1 to account for the fact that index 18 wouldn't exist in len = 18
+		
+		for(Student s : stuData) {
+			ArrayList<Integer> stuChoices = s.getChoices();
+			if(choices.get(0) != 0){ //0 accounts for empty choices
+				demand[choices.get(0)]++//increment demand at the index of the session
+			}
+		}
+		
+		int len = stuData.size();
+		for(int i = 0; i<len-1; i++){
+			int popularChoicesStudentIndex = i;
+			for(int n = i+1; n< len; n++){
+				if(demand[stuData.get(n).getChoices.get(0)]>demand[stuData.get(i).getChoices.get(0)]){
+					popularChoicesStudentIndex = n;
+				}
+			}
+			
+		}
+	}
 	
 	public int assignStudents(){
 		int totalConflicts = 0;
