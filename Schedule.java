@@ -188,13 +188,13 @@ public class Schedule{
 	}
 	
 	
-	public prioritySortStudents() {
+	public void prioritySortStudents() {
 		int demand[] = new int[numSessions+1]; //+1 to account for the fact that index 18 wouldn't exist in len = 18
 		
 		for(Student s : stuData) {
-			ArrayList<Integer> stuChoices = s.getChoices();
+			ArrayList<Integer> choices = s.getChoices();
 			if(choices.get(0) != 0){ //0 accounts for empty choices
-				demand[choices.get(0)]++//increment demand at the index of the session
+				demand[choices.get(0)]++;//increment demand at the index of the session
 			}
 		}
 		
@@ -202,10 +202,15 @@ public class Schedule{
 		for(int i = 0; i<len-1; i++){
 			int popularChoicesStudentIndex = i;
 			for(int n = i+1; n< len; n++){
-				if(demand[stuData.get(n).getChoices.get(0)]>demand[stuData.get(i).getChoices.get(0)]){
+				if(demand[stuData.get(n).getChoices().get(0)]>demand[stuData.get(i).getChoices().get(0)]){
 					popularChoicesStudentIndex = n;
 				}
 			}
+			
+			//swap the students and move the stundet with more niche choices forward in the stuData ArrayList
+			Student temp = stuData.get(popularChoicesStudentIndex);
+			stuData.set(popularChoicesStudentIndex, stuData.get(i));
+			stuData.set(i,temp);
 			
 		}
 	}
@@ -333,6 +338,7 @@ public class Schedule{
 		
 	public void schedule(boolean custom){
 		scheduleDetails();
+		prioritySortStudents();
 		rankedPopularityAllSlots();
 		if(custom){
 			customSchedule();

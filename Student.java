@@ -21,7 +21,7 @@ public class Student{
 	public int getID(){
 		return ID;
 	}
-	public ArrayList getChoices(){
+	public ArrayList<Integer> getChoices(){
 		return choices;
 	}
 	public ArrayList<Integer> getSchedule(){
