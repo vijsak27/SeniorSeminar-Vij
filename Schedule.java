@@ -1,3 +1,5 @@
+//Schedule.java
+
 import java.util.*;
 
 public class Schedule{
@@ -260,10 +262,7 @@ public class Schedule{
 			}							
 		}	
 		}				
-		for(Student student: stuData){
-			System.out.println(student);
-		}
-		System.out.println("Total Conflicts: "+totalConflicts);
+		
 		
 		
 		for(Student student:stuData){
@@ -283,7 +282,10 @@ public class Schedule{
 		
 		}
 		
-		
+		for(Student student: stuData){
+			System.out.println(student);
+		}
+		System.out.println("Total Conflicts: "+totalConflicts);
 		
 		return totalConflicts;
 		
