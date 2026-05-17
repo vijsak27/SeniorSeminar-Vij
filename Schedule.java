@@ -631,7 +631,10 @@ public class Schedule{
 		System.out.println("Average conflicts per student: "+((double)conflicts/stuData.size()));
 	}
 	
-	
+	/*
+	The toString() method defines what is printed out when the schedule object is
+	printed. The schedule object printed will produce the master schedule
+	*/
 	public String toString(){
 		String output = "";
 		
@@ -641,8 +644,6 @@ public class Schedule{
 			}
 			output+=("\n");
 		}
-		
-		
 		
 		return output;
 	}
