@@ -13,7 +13,7 @@
 
 //imports
 import java.util.*;
-import java.io.*
+import java.io.*;
 
 public class Schedule{
 	
@@ -152,98 +152,119 @@ public class Schedule{
 		}
 	}
 	
+	
+	/*
+	The rankedPopularityAllSlots() method return the ArrayList containing the ranked popularity
+	of all of the sessino across all of the slots. This method does so by first calculating the
+	popularity of all of the sessions and then ranking the sessions based on the popularity
+	*/
+	
 	public ArrayList<ArrayList<ArrayList<Integer>>> rankedPopularityAllSlots(){
+		
 		ArrayList<ArrayList> choicesAllSlots = new ArrayList<ArrayList>(); // all choices; all slots
 		ArrayList<int[]> popularitiesAcrossSlots = new ArrayList<int[]>();//numerical pop values all slots
 	
-		
-		ArrayList<ArrayList<Integer>> rankedPopAllSlots = new ArrayList<>();//numerical values of pop stored in 5 diff arraylists
+		ArrayList<ArrayList<Integer>> rankedPopAllSlots = new ArrayList<>();//numerical values of popularity stored in 5 different arraylists
 		ArrayList<ArrayList<Integer>> sessPopAllSlots = new ArrayList<>();//session IDs of popularity all slots (1-18 in this case)
-		
 
 		for(int i = 0; i < numSlots; i++){
+			
 			ArrayList<Integer> choicesPerSlot = new ArrayList<Integer>();
 			
 			int len = stuData.size();
-			
 			for(int n = 0 ; n < len; n++){
 
 				Student s = stuData.get(n);
 				ArrayList<Integer> stuChoices = s.getChoices();
 				
+				//the students choice to the list for each slot
 				int choiceThisSlot = stuChoices.get(i);
 				choicesPerSlot.add(choiceThisSlot);
 				
 			}
 		
+			//add the choices for this slot to the larger choicesAllSlots ArrayList
 			choicesAllSlots.add(choicesPerSlot);
-			//int sessionNum = choicesPerSlot.get(0);//first element in the list of choices for one time slot
 			
 			int length = choicesPerSlot.size();
+			
+			//get popularity for each session
 			int[] popularityPerSession = new int[numSessions];
-			//ArrayList <Integer> popPerSessionList= new Arraylist<Integer>();
+			
+			//loop through each session
 			for (int a = 0 ; a<numSessions; a++){
 				
+				//count popularity (resets to 0 for every session)
 				int popularityCounter = 0;
 				
 				for(int b = 0 ; b<length; b++){
 					
-					if(((int)(choicesPerSlot.get(b))) == a+1){
+					if(((int)(choicesPerSlot.get(b))) == a+1){//add one since the indexes and sessionIDs are off by 1
 						popularityCounter++;
 					}
 				}
-					popularityPerSession[a]=popularityCounter;//important note: popularityPerSession sarts at 0, so session 1 is at index 0
-					popularityCounter = 0;//reset to 0 for next timeslot calculations	
+				
+				//update popularityPerSession array
+				//important note: popularityPerSession sarts at 0, so session 1 is at index 0
+				popularityPerSession[a]=popularityCounter;	
 			}
 			
+			//the above below contain popularity across all slots for all sessions (non-ranked)
 			popularitiesAcrossSlots.add(popularityPerSession);
-			//the above line contain popularity across all sessions (non-ranked)
-			
-			
 			
 		}
 		// at this point all of the choices should have been loaded and the popularities have been loaded
 	
 		
+		//loop through each slot and rank the popularity
 		for(int c = 0 ; c<numSlots; c++){
 			ArrayList<Integer> rankedPopThisSlot = new ArrayList<Integer>();//stores the numerical value of popularity (number of students)
 			ArrayList<Integer> sessionsPopularityRankedThisSlot = new ArrayList<Integer>();//stores the sessionIDs (1-18) in ranked pop order
 
+			//use output of first half of this method()
 			int[] currTimeSlotPop = popularitiesAcrossSlots.get(c);
 			
 			int arrayLength = currTimeSlotPop.length;
 			boolean[] used = new boolean[arrayLength]; //keep track of which indices have been "used" as a popular session in the popularity rankings
 			
+			//variables used to find most popular session
 			int max;
 			int popularSessionIndex;
 			
 			for(int q = 0 ; q<numSessions;q++){
 				
-					max = -1;//default -1 for max and popular session index
-					popularSessionIndex=-1;
+					max = Integer.MIN_VALUE;//default Integer.MIN_VALUE for max and popular session index
+					popularSessionIndex=-1;//default starting value will be updated by code below
 					
+					//find the most popular session for the slot
 					for(int d = 0; d<arrayLength; d++){
 						if(!used[d] && currTimeSlotPop[d]>max){
+							// set max equal to number of students in the most popular session 
 							max = currTimeSlotPop[d];
+							
+							//set popularSessionIndex to the index of the most popular session for this slot
 							popularSessionIndex = d;
 						}
 					}
+				//add the sessino in ranked order
 				rankedPopThisSlot.add(max);	
 				sessionsPopularityRankedThisSlot.add((popularSessionIndex+1));
+				
 				//make sure same session isn't max again
 				used[popularSessionIndex] = true;
 	
 				
 				
 			}
+			//add the rankedPopThisSlot and sessionsPopularityRankedThisSlot to the cumulative ArrayLists
 			rankedPopAllSlots.add(rankedPopThisSlot);
 			sessPopAllSlots.add(sessionsPopularityRankedThisSlot);	
 		}
 
-		
+		//create a returnList to return the output of this method in one variable
 		ArrayList<ArrayList<ArrayList<Integer>>> returnList = new ArrayList<>();
-		returnList.add(rankedPopAllSlots);//first add all the actual popularity value
-		returnList.add(sessPopAllSlots);//sessions ranked by popularity
+		returnList.add(rankedPopAllSlots);//first add all the actual popularity value; index 0
+		returnList.add(sessPopAllSlots);//sessions ranked by popularity; index 1
 		
 		return returnList;	
 	}
