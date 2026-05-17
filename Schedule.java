@@ -66,7 +66,16 @@ public class Schedule{
 		
 	}
 	
+	/*
+	The customSchedule() method was primarily used to compare different versions of the master schedule
+	. Currently, it contains the schedule that was created by Mr. Twyford. In the schedule() method
+	below, a boolean value can be passed into the method as a parameter than determines whether
+	the program will use the custom schedule included in this method or if the program will
+	create a master schedule using the popularity of the sessions
+	*/
 	public void customSchedule(){
+		
+		//custom schedule provided by Mr. Twyford
 		int[][] customSchedule = 
 					{{1,9,14,5,15},
 					{2,6,10,12,16},
@@ -74,10 +83,16 @@ public class Schedule{
 					{16,18,13,1,9},
 					{7,8,17,2,6}};
 					
+		//update the schedule[][] with the custom schedule			
 		for (int row = 0; row<numSlots; row++){
 			for(int col = 0; col<sessPerSlot; col++){
 				for(int session = 0; session<numSessions; session++){
 					if(customSchedule[row][col]==sessions.get(session).getID()){
+						
+						/*
+						Need to make a copy of the original session so that if a sessino occurs
+						more than once, each session in schedule[][] will be distinct
+						*/
 						Session originial = sessions.get(session);
 						schedule[row][col] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
 					}
@@ -86,15 +101,23 @@ public class Schedule{
 		}
 	}
 	
+	
+	/*
+	The sort() method sorts the master schedule by taking in the ranked popularity from the
+	rankedPopularityAllSlots method and identifying the most popular sessions to add into
+	the master schedule. The only constraint on this is that there cannot be more than 2 occurences
+	of the same session in the master schedule
+	*/
 
 	public void sort(){
 		
-		
+		//take in output of rankedrankedPopularityAllSlots() method
 		ArrayList<ArrayList<ArrayList<Integer>>> rankedPopularity = rankedPopularityAllSlots();
 		int[] sessionCounts = new int[numSessions];
 		
 		for (int slot = 0; slot<numSlots; slot++){
 			
+			//Extract the popularity for the current slot from the rankedPopularity ArrayList
 			ArrayList<Integer> popularityThisSlot = rankedPopularity.get(1).get(slot);
 		
 			int sessionsFilled = 0;
