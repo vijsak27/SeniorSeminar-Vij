@@ -215,6 +215,35 @@ public class Schedule{
 		}
 	}
 	
+	/*
+
+	I am creating a second version of assigning students for go student by student rather than
+	slot by slot
+
+	 */
+	public int assignStudentsV2(){
+		int totalConflicts = 0;
+		
+		for(Student currStudent : stuData){
+			boolean[] slotsFilled = new boolean[numSlots]//create an array for each students trakcing if they have been assigned sessions in each slot
+			int numAssigned = 0;
+			
+			for (int choice : stuChoices){
+				if(choice == 0){
+					continue; //skip the empty choices for the studetns at the end
+				}
+				
+				for(int slot = 0; slot < numSlots; slot++){
+					for(int session = 0; session < sessPerSlot; session++){
+					}
+				}
+			}
+			
+		}
+		
+	}
+	
+	
 	public int assignStudents(){
 		int totalConflicts = 0;
 		
