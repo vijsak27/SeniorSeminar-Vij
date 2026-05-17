@@ -56,6 +56,7 @@ public class Schedule{
 		}
 	}
 	
+
 	public void sort(){
 		
 		
@@ -437,7 +438,7 @@ public class Schedule{
 		else{
 			sort();
 		}
-		int conflicts = assignStudentsV2();
+		int conflicts = assignStudents();
 		showSessionRosters();
 		System.out.println(toString());
 		System.out.println("Total Conflicts: "+ conflicts);

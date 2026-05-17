@@ -1,18 +1,21 @@
-//ReadFile.java
+/*
+ * ReadFile.java
+ * Author: Sakshum Vij
+ * Date: 5/17/26
+ * Program: Senior Seminar
+ * Purpose: 
+ * the readFile calss will contain functionally for the 2 csv files used in this project to be 
+ * loaded in and stored in two array lists called students and sessions
+ * The first file contains all the students' choices, names, and IDs
+ * The second file contains the sessions, speaker, and session name
+ * the methods for these classes will be called in Main
+ * to load the data in from the csv files
+ * */
 
+//imports
 import java.io.*;
 import java.util.*;
 
-/*
-the readFile calss will contain functionally for the 2 csv files used in this project to be 
-loaded in and stored in two array lists called students and sessions
-
-The first file contains all the students' choices, names, and IDs
-The second file contains the sessions, speaker, and session name
-
-the methods for these classes will be called in Main
-to load the data in from the csv files
-*/
 
 public class ReadFile{
 	private ArrayList<Student> students = new ArrayList<Student>();// array list including data for students
