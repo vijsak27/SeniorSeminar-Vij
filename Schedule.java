@@ -559,11 +559,13 @@ public class Schedule{
 		
 		}
 		
+		//print statements for debugging
+		/*
 		for(Student student: stuData){
 			System.out.println(student);
 		}
-		System.out.println("Total Conflicts: "+totalConflicts);
-		
+		*/
+		System.out.println("Total Conflicts: "+totalConflicts+"\n\n");
 		return totalConflicts;
 		
 		
@@ -572,14 +574,20 @@ public class Schedule{
 	
 	
 	
-	
+	/*
+	The showSessionRosters() method enables the program to shows all of the rosters of all of the 
+	sessions during the Senior Seminar event 
+	*/
 	public void showSessionRosters(){
 		for(int slot = 0; slot<numSlots; slot++){
 			for(int session = 0; session<sessPerSlot; session++){
+				//print out the Slot, Session, and IDs of student
+				//the +1's in the next line are because in the code the slots begin at 0
 				System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRosterIDs: ");
 				for(Student student: schedule[slot][session].getStudents()){
 					System.out.print(student.getID()+" ");
 				}
+				//also print out the number of the students assigned to the session
 				System.out.println("Session size: "+schedule[slot][session].getNumStudents());
 				System.out.print("\n\n");
 			}
@@ -588,22 +596,41 @@ public class Schedule{
 	
 	}
 		
+		
+	/*
+	The schedule() method acitivates when a user asks for the Senior Seminar program to run
+	and organize the sessions and students. This organizes the functionality of the methods in 
+	this class
+    */	
 	public void schedule(boolean custom){
+		//ask for user input
 		scheduleDetails();
+		
+		//rank the students
 		prioritySortStudents();
+		
+		//calculate the popularity for each session
 		rankedPopularityAllSlots();
+		
+		//see if a custom schedule should be used
 		if(custom){
 			customSchedule();
 		}
 		else{
 			sort();
 		}
+		
+		//assign students and get conflicts
 		int conflicts = assignStudents();
-		showSessionRosters();
+		
+		//print out master schedule
 		System.out.println(toString());
+		
+		//print out how optimal the schedule is
 		System.out.println("Total Conflicts: "+ conflicts);
 		System.out.println("Average conflicts per student: "+((double)conflicts/stuData.size()));
 	}
+	
 	
 	public String toString(){
 		String output = "";
