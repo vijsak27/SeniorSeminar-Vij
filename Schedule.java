@@ -1,16 +1,32 @@
-//Schedule.java
+/*
+ * Schedule.java
+ * Author: Sakshum Vij
+ * Date: 5/17/26
+ * Program Name: Senior Seminar
+ * Purpose:
+ * The schedule class performs to organization of the senior seminar event. It include several
+ * instance variables that the user inputs and calls upon the ReadFile.java class to load
+ * the student information from the inputted data files. This class has several methods that
+ * form the functionality of this class, cinluding the ranking of session popularity, forming
+ * the session schedule, and organizing the students.
+ * */
 
+//imports
 import java.util.*;
+import java.io.*
 
 public class Schedule{
-	private int numSlots;
-	private int sessPerSlot;
-	private Session[][] schedule;
-	private ArrayList<Student> stuData;
-	private ArrayList<Session> sessions;
-	private int numSessions;
-	private int maxCapacity;
 	
+	//instance variables
+	private int numSlots; //number of time slots
+	private int sessPerSlot; //number of sessions offered per time slot
+	private Session[][] schedule; //the schedule of sessions
+	private ArrayList<Student> stuData; //used to load in data files
+	private ArrayList<Session> sessions; //loaded in from data file
+	private int numSessions; //input by user (number of sessinos offered)
+	private int maxCapacity; //maximum number of students in a session
+	
+	//constructor
 	public Schedule(){
 		ReadFile r1 = new ReadFile();
 		r1.loadStudents();
