@@ -223,7 +223,8 @@ public class Schedule{
 		int totalConflicts = 0;
 		
 		for(Student currStudent : stuData){
-			boolean[] slotsFilled = new boolean[numSlots]//create an array for each students trakcing if they have been assigned sessions in each slot
+			ArrayList<Integer> stuChoices = currStudent.getChoices();
+			boolean[] slotsFilled = new boolean[numSlots];//create an array for each students trakcing if they have been assigned sessions in each slot
 			int numAssigned = 0;
 			
 			for (int choice : stuChoices){
@@ -231,14 +232,28 @@ public class Schedule{
 					continue; //skip the empty choices for the studetns at the end
 				}
 				
+				boolean alreadyHasSession = false;
+				for(int i = 0; i<currStudent.getSchedule().size(); i++){
+						if(currStudent.getSchedule().get(i) == choice){
+							alreadyHasSession = true;
+						}
+				}
+				if(alreadyHasSession){
+					continue;//if already has the sessino then skip it
+				}
+				
 				boolean gotChoice = false;
 				for(int slot = 0; slot < numSlots; slot++){
+					if(slotsFilled[slot]==true){
+							continue; //if already assigned for slot then skip
+					}
 					for(int session = 0; session < sessPerSlot; session++){
 						Session sessAtLocation = schedule[slot][session];
 						
-						if(sessAtLocation.getID() == choice && sessAtLocatino.getNumStudents()<maxCapacity){
+						
+						if(sessAtLocation.getID() == choice && sessAtLocation.getNumStudents()<maxCapacity){
 							sessAtLocation.addStudent(currStudent);
-							currentStudent.addToSchedule(choice);
+							currStudent.addToSchedule(choice);
 							slotsFilled[slot]=true;
 							gotChoice = true;
 							numAssigned++;
@@ -257,17 +272,36 @@ public class Schedule{
 				totalConflicts += (numSlots-numAssigned);
 				
 				for(int slot = 0; slot <numSlots; slot++){
-					if(!slotFilled[slot]){
+					if(!slotsFilled[slot]){
 						for(int session = 0 ; session < sessPerSlot; session++){
 							Session fillInSession = schedule[slot][session];
 							
+							boolean alreadyTaken = false;
+							for(int i = 0; i<currStudent.getSchedule().size(); i++){
+								
+								if((currStudent.getSchedule().get(i))==fillInSession.getID()){
+									alreadyTaken=true;
+								}
+							}
+							
+							if(!alreadyTaken && fillInSession.getNumStudents()<maxCapacity){
+								fillInSession.addStudent(currStudent);
+								currStudent.addToSchedule(fillInSession.getID());
+								slotsFilled[slot]=true;
+								break; // once assigned stop searching
+							}
 						}
 					}
 				}
 			}
 		}
 		
+		for(Student student: stuData){
+			System.out.println(student);
+		}
+		System.out.println("Total Conflicts: "+totalConflicts);
 		
+		return totalConflicts;
 		
 	}
 	
@@ -403,7 +437,7 @@ public class Schedule{
 		else{
 			sort();
 		}
-		int conflicts = assignStudents();
+		int conflicts = assignStudentsV2();
 		showSessionRosters();
 		System.out.println(toString());
 		System.out.println("Total Conflicts: "+ conflicts);
