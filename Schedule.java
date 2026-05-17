@@ -349,9 +349,13 @@ public class Schedule{
 		
 		int totalConflicts = 0;
 		
+		//tracks if a student has been assigned all slots
+		boolean[][] studentSlotTracker = new boolean[stuData.size()][numSlots];
+		
 		//loop through each slot
 		for(int slot = 0; slot<numSlots; slot++){
-			for (Student currentStudent : stuData){
+			for (int studentIndex = 0; studentIndex < stuData.size(); studentIndex++){
+				Student currentStudent = stuData.get(studentIndex);
 				
 				//create a variable to see if the student is assigned for this slot
 				boolean assignedThisSlot = false;
@@ -361,6 +365,11 @@ public class Schedule{
 				
 				//loop through the student's choice and see if it is in the slot
 				for(int choice : stuChoices){
+					
+					//don't keep on searching if already assigned
+					if(assignedThisSlot){
+						break;
+					}
 				
 					//see if student has alreadyTaken the session
 					boolean alreadyTaken = false;
@@ -390,6 +399,9 @@ public class Schedule{
 							
 							//this variable will tell the program to move onto the next slot
 							assignedThisSlot=true;
+							
+							//update the 2D array tracking assignments
+							studentSlotTracker[studentIndex][slot] = true;
 							
 							break; //stop looking for assignments in this slot (since already assigned)
 						}
@@ -447,6 +459,9 @@ public class Schedule{
 						//mark as assigned
 						assignedThisSlot=true;
 						
+						//update student assignment tracker
+						studentSlotTracker[studentIndex][slot] = true;
+						
 						//stop looking for assignments in this slot (since already assigned)
 						break;
 					}
@@ -463,42 +478,51 @@ public class Schedule{
 		for the students who entered no preferences
 		*/
 		
-		for(Student student:stuData){
-			if(student.getSchedule().size()<numSlots){
-				while(student.getSchedule().size()<numSlots){
-					for(int slot = 0; slot<numSlots; slot++){
-						for(int session = 0; session<sessPerSlot; session++){
-							if(schedule[slot][session].getNumStudents()<maxCapacity){
-								
-								//ensure that the student hasn't already aattended the session
-								boolean alreadyTaken = false;
-								
-								for(int i = 0; i<student.getSchedule().size(); i++){
-									if(student.getSchedule().get(i)==schedule[slot][session].getID()){
-										alreadyTaken=true;
-										break;
-									}
+		for(int studentIndex = 0; studentIndex<stuData.size(); studentIndex++){
+			Student currentStudent = stuData.get(studentIndex);
+				
+			if (currentStudent.getSchedule().size()<numSlots){
+				for(int slot = 0; slot<numSlots; slot++){
+					
+					if(!studentSlotTracker[studentIndex][slot]){
+							
+					for(int session = 0; session<sessPerSlot; session++){
+						if(schedule[slot][session].getNumStudents()<maxCapacity){
+									
+							//ensure that the student hasn't already aattended the session
+							boolean alreadyTaken = false;
+									
+							for(int i = 0; i<currentStudent.getSchedule().size(); i++){
+								if(currentStudent.getSchedule().get(i)==schedule[slot][session].getID()){
+									alreadyTaken=true;
+									break;
 								}
-								
-								if(!alreadyTaken){
-									student.addToSchedule(schedule[slot][session].getID());
-									schedule[slot][session].addStudent(student);
-									break; //don't add to more sessions in same time slot
-								}
-							}							
-						}
+							}
+									
+							if(!alreadyTaken){
+								currentStudent.addToSchedule(schedule[slot][session].getID());
+								schedule[slot][session].addStudent(currentStudent);
+								studentSlotTracker[studentIndex][slot] = true;
+									
+								break; //don't add to more sessions in same time slot
+							}
+						}							
 					}
+				
+					
 				}
-			}
+				}
+			}		
+
 		
 		}
 		
 		//print statements for debugging
-		/*
+		
 		for(Student student: stuData){
 			System.out.println(student);
 		}
-		*/
+		
 		System.out.println("Total Conflicts: "+totalConflicts+"\n\n");
 		return totalConflicts;
 		
@@ -557,6 +581,7 @@ public class Schedule{
 		//assign students and get conflicts
 		int conflicts = assignStudents();
 		
+		showSessionRosters();
 		//print out master schedule
 		System.out.println(toString());
 		
