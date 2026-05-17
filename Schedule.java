@@ -35,20 +35,34 @@ public class Schedule{
 		sessions=r1.getSessions();
 	}
 	
+	/*
+	The scheduleDetails() method is a void method (does not return any value) that taken in the
+	inputs necessary to run senior seminar from the user. This information includes, the number of
+	time slots (must match the data file), the number of sessions offered per time slot, total
+	number of session (must match the data file), and the maximum capacity of one session. These
+	inputs are then assigned to the instance variables of the schedule object.
+	*/
 	public void scheduleDetails(){
 		Scanner s1 = new Scanner(System.in);
+		
 		System.out.println("How many time slots are you offering?");
 		numSlots = s1.nextInt();
-		s1.nextLine();
+		s1.nextLine();//clear buffer
+		
 		System.out.println("How many sessions per time slot?");
 		sessPerSlot = s1.nextInt();
-		s1.nextLine();
+		s1.nextLine();//clear buffer
+		
 		System.out.println("How many sessions will you offer in total?");
 		numSessions = s1.nextInt();
-		s1.nextLine();
-		System.out.println("How many student will be allowed in one session?");
+		s1.nextLine();//clear buffer
+		
+		System.out.println("How many students will be allowed in one session?");
 		maxCapacity = s1.nextInt();
-		schedule = new Session[numSlots][sessPerSlot];
+		
+		schedule = new Session[numSlots][sessPerSlot]; //initialize the schedule 2D array with inputted values
+		
+		s1.close();
 		
 	}
 	
