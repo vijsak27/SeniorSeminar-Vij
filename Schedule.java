@@ -269,12 +269,24 @@ public class Schedule{
 		return returnList;	
 	}
 	
-	
+	/*
+	The prioritySortStudents() organizes the student from most niche to least niche selections
+	to maximize the number of choices each student can get becuase it is important to not fill up
+	the niche sessions with overflows from the expectionally popular sessions, but rather, to give 
+	the student with less popular choice their desired session prior to filling in the more popular
+	sessions and the overflows from those sessions. This methodology decreased the number of conflict
+	I have.
+	*/
 	public void prioritySortStudents() {
 		int demand[] = new int[numSessions+1]; //+1 to account for the fact that index 18 wouldn't exist in len = 18
 		
+		//loop through students
 		for(Student s : stuData) {
+			
+			//get each students choices
 			ArrayList<Integer> choices = s.getChoices();
+			
+			//get the highest priority session
 			if(choices.get(0) != 0){ //0 accounts for empty choices
 				demand[choices.get(0)]++;//increment demand at the index of the session
 			}
@@ -284,6 +296,8 @@ public class Schedule{
 		for(int i = 0; i<len-1; i++){
 			int nicheChoicesStudentIndex = i;
 			for(int n = i+1; n< len; n++){
+				
+				//compare the demand of neighboring students
 				if(demand[stuData.get(n).getChoices().get(0)]<demand[stuData.get(nicheChoicesStudentIndex).getChoices().get(0)]){
 					nicheChoicesStudentIndex = n;
 				}
