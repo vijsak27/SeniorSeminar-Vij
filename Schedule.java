@@ -127,10 +127,32 @@ public class Schedule{
 			//while all sessions for the slot have not been filled, continue looping
 			while(sessionsFilled<sessPerSlot){
 				
+				if(rankIndex>=popularityThisSlot.size()){
+					break;
+				}
+				
 				//get the rankIndex ranked session for this slot
 				int sessionID = popularityThisSlot.get(rankIndex);
 				
-				if(sessionCounts[sessionID-1]<maxRepeats){// a session can run max twice
+				//get the session object from the ID
+				Session currSession = null;
+				for(int s = 0; s<numSessions; s++){
+					if(sessions.get(s).getID()==sessionID){
+						currSession = sessions.get(s);
+						break;
+					}
+				}
+				
+				//see if the presenter if busy during this slot
+				boolean presenterBusy = false;
+				if(currSession != null){
+					for(int n = 0; n<sessPerSlot; n++){
+						if(schedule[slot][n]!=null&&schedule[slot][n].getPresenter().equals(currSession.getPresenter())){
+							presenterBusy=true;
+						}
+					}
+				}
+				if(!presenterBusy && sessionCounts[sessionID-1]<maxRepeats){// a session can run max twice
 					
 					for(int i = 0 ; i<numSessions; i++){
 						if(sessionID == sessions.get(i).getID()){
@@ -142,6 +164,8 @@ public class Schedule{
 							//update the number of times the session has been schedule and the number of session filled for the slot
 							sessionCounts[sessionID-1]++;
 							sessionsFilled++;
+							
+							break;
 						}
 					}
 				}
@@ -310,96 +334,6 @@ public class Schedule{
 			stuData.set(i,temp);
 			
 		}
-	}
-	
-	/*
-	I am creating a second version of assigning students for go student by student rather than
-	slot by slot
-	 */
-	public int assignStudentsV2(){
-		int totalConflicts = 0;
-		
-		for(Student currStudent : stuData){
-			ArrayList<Integer> stuChoices = currStudent.getChoices();
-			boolean[] slotsFilled = new boolean[numSlots];//create an array for each students trakcing if they have been assigned sessions in each slot
-			int numAssigned = 0;
-			
-			for (int choice : stuChoices){
-				if(choice == 0){
-					continue; //skip the empty choices for the studetns at the end
-				}
-				
-				boolean alreadyHasSession = false;
-				for(int i = 0; i<currStudent.getSchedule().size(); i++){
-						if(currStudent.getSchedule().get(i) == choice){
-							alreadyHasSession = true;
-						}
-				}
-				if(alreadyHasSession){
-					continue;//if already has the sessino then skip it
-				}
-				
-				boolean gotChoice = false;
-				for(int slot = 0; slot < numSlots; slot++){
-					if(slotsFilled[slot]==true){
-							continue; //if already assigned for slot then skip
-					}
-					for(int session = 0; session < sessPerSlot; session++){
-						Session sessAtLocation = schedule[slot][session];
-						
-						
-						if(sessAtLocation.getID() == choice && sessAtLocation.getNumStudents()<maxCapacity){
-							sessAtLocation.addStudent(currStudent);
-							currStudent.addToSchedule(choice);
-							slotsFilled[slot]=true;
-							gotChoice = true;
-							numAssigned++;
-							break;//stop searching after assigned for the slot
-						}
-					}
-					if(gotChoice){
-						break;//move on to next choice after this one is assigned
-					}
-				}
-			}
-			
-			
-			//account for conflicts
-			if(numAssigned < numSlots){
-				totalConflicts += (numSlots-numAssigned);
-				
-				for(int slot = 0; slot <numSlots; slot++){
-					if(!slotsFilled[slot]){
-						for(int session = 0 ; session < sessPerSlot; session++){
-							Session fillInSession = schedule[slot][session];
-							
-							boolean alreadyTaken = false;
-							for(int i = 0; i<currStudent.getSchedule().size(); i++){
-								
-								if((currStudent.getSchedule().get(i))==fillInSession.getID()){
-									alreadyTaken=true;
-								}
-							}
-							
-							if(!alreadyTaken && fillInSession.getNumStudents()<maxCapacity){
-								fillInSession.addStudent(currStudent);
-								currStudent.addToSchedule(fillInSession.getID());
-								slotsFilled[slot]=true;
-								break; // once assigned stop searching
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		for(Student student: stuData){
-			System.out.println(student);
-		}
-		System.out.println("Total Conflicts: "+totalConflicts);
-		
-		return totalConflicts;
-		
 	}
 	
 	
