@@ -216,10 +216,8 @@ public class Schedule{
 	}
 	
 	/*
-
 	I am creating a second version of assigning students for go student by student rather than
 	slot by slot
-
 	 */
 	public int assignStudentsV2(){
 		int totalConflicts = 0;
@@ -233,13 +231,43 @@ public class Schedule{
 					continue; //skip the empty choices for the studetns at the end
 				}
 				
+				boolean gotChoice = false;
 				for(int slot = 0; slot < numSlots; slot++){
 					for(int session = 0; session < sessPerSlot; session++){
+						Session sessAtLocation = schedule[slot][session];
+						
+						if(sessAtLocation.getID() == choice && sessAtLocatino.getNumStudents()<maxCapacity){
+							sessAtLocation.addStudent(currStudent);
+							currentStudent.addToSchedule(choice);
+							slotsFilled[slot]=true;
+							gotChoice = true;
+							numAssigned++;
+							break;//stop searching after assigned for the slot
+						}
+					}
+					if(gotChoice){
+						break;//move on to next choice after this one is assigned
 					}
 				}
 			}
 			
+			
+			//account for conflicts
+			if(numAssigned < numSlots){
+				totalConflicts += (numSlots-numAssigned);
+				
+				for(int slot = 0; slot <numSlots; slot++){
+					if(!slotFilled[slot]){
+						for(int session = 0 ; session < sessPerSlot; session++){
+							Session fillInSession = schedule[slot][session];
+							
+						}
+					}
+				}
+			}
 		}
+		
+		
 		
 	}
 	
