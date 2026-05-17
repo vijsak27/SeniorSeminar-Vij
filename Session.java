@@ -11,11 +11,6 @@
  * 3. presenterName - presenting speaker
  * 4. numStudents - number of studentd attending the session
  * 5. students - arraylist of student objects attending the session
- * 
- * 
- * 
- * 
- * 
  * */
 
 

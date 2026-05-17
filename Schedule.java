@@ -123,21 +123,28 @@ public class Schedule{
 			int sessionsFilled = 0;
 			int rankIndex = 0; //starts at the first most popular session (included this to account for sessions already booked twice);
 			
-			
+			//while all sessions for the slot have not been filled, continue looping
 			while(sessionsFilled<sessPerSlot){
+				
+				//get the rankIndex ranked session for this slot
 				int sessionID = popularityThisSlot.get(rankIndex);
 				
-				if(sessionCounts[sessionID-1]<2){
+				if(sessionCounts[sessionID-1]<2){// a session can run max twice
+					
 					for(int i = 0 ; i<numSessions; i++){
-					if(sessionID == sessions.get(i).getID()){
-						
-						Session originial = sessions.get(i);
-						schedule[slot][sessionsFilled] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
-						sessionCounts[sessionID-1]++;
-						sessionsFilled++;
+						if(sessionID == sessions.get(i).getID()){
+							
+							//add a copy of the session the proper location the schedule
+							Session originial = sessions.get(i);
+							schedule[slot][sessionsFilled] = new Session (originial.getID(),originial.getName(), originial.getPresenter());
+							
+							//update the number of times the session has been schedule and the number of session filled for the slot
+							sessionCounts[sessionID-1]++;
+							sessionsFilled++;
+						}
 					}
 				}
-				}
+				//go to the next most popular session for scheduling
 				rankIndex++;
 			}
 			
