@@ -25,6 +25,7 @@ public class Schedule{
 	private ArrayList<Session> sessions; //loaded in from data file
 	private int numSessions; //input by user (number of sessinos offered)
 	private int maxCapacity; //maximum number of students in a session
+	private int maxRepeats = 2; //maximum number of times a session can repeat
 	
 	//constructor
 	public Schedule(){
@@ -129,7 +130,7 @@ public class Schedule{
 				//get the rankIndex ranked session for this slot
 				int sessionID = popularityThisSlot.get(rankIndex);
 				
-				if(sessionCounts[sessionID-1]<2){// a session can run max twice
+				if(sessionCounts[sessionID-1]<maxRepeats){// a session can run max twice
 					
 					for(int i = 0 ; i<numSessions; i++){
 						if(sessionID == sessions.get(i).getID()){
@@ -469,7 +470,6 @@ public class Schedule{
 			/*
 			 This code snipped accounts for the several student who did not enter any choices.
 			 It ensures that the students are not mistakenly counted as conflicts
-			
 			*/
 			boolean noChoices = true;
 			for(int i = 0; i<stuChoices.size();i++){
@@ -481,25 +481,40 @@ public class Schedule{
 			
 			if(assignedThisSlot==false && !noChoices){
 				
-				//if the 
+				//if the student did not receive a preference in the time slot add a conflict
 				totalConflicts++;
+				
 				//fill in slot with another session
 				for(int room = 0; room< sessPerSlot; room ++){
+					
+					//potential filler session
 					Session fillInSession = schedule[slot][room];
+					
+					//see if the student has already taken the potential filler session
 					boolean fillInSessionAlreadyTaken =false;
-																
+						
+					//loop through the student's current schedule and add a filler session											
 					for(int session = 0; session<currentStudent.getSchedule().size(); session++){
 							
 						if((currentStudent.getSchedule().get(session))==fillInSession.getID()){
 							fillInSessionAlreadyTaken=true;
 						}
 					}
-													
+						
+					//if not already taken and there is space add the student								
 					if(!fillInSessionAlreadyTaken && fillInSession.getNumStudents()<maxCapacity){
+						
+						//update the session by adding the student
 						fillInSession.addStudent(currentStudent);
+						
+						//update the student's schedule
 						currentStudent.addToSchedule(fillInSession.getID());
+						
+						//mark as assigned
 						assignedThisSlot=true;
-						break; //stop looking for assignments in this slot (since already assigned)
+						
+						//stop looking for assignments in this slot (since already assigned)
+						break;
 					}
 													
 				}	
@@ -508,7 +523,11 @@ public class Schedule{
 		}	
 		}				
 		
-		
+		/*
+		The code below ensures that all students have assigned spots for all slots
+		to ensure that no student is unaccounted for. This code assigns the schedules
+		for the students who entered no preferences
+		*/
 		
 		for(Student student:stuData){
 			if(student.getSchedule().size()<numSlots){
@@ -516,10 +535,23 @@ public class Schedule{
 					for(int slot = 0; slot<numSlots; slot++){
 						for(int session = 0; session<sessPerSlot; session++){
 							if(schedule[slot][session].getNumStudents()<maxCapacity){
-								student.addToSchedule(schedule[slot][session].getID());
-								schedule[slot][session].addStudent(student);
-								break; //don't add to more sessions in same time slot
-							}
+								
+								//ensure that the student hasn't already aattended the session
+								boolean alreadyTaken = false;
+								
+								for(int i = 0; i<student.getSchedule().size(); i++){
+									if(student.getSchedule().get(i)==schedule[slot][session].getID()){
+										alreadyTaken=true;
+										break;
+									}
+								}
+								
+								if(!alreadyTaken){
+									student.addToSchedule(schedule[slot][session].getID());
+									schedule[slot][session].addStudent(student);
+									break; //don't add to more sessions in same time slot
+								}
+							}							
 						}
 					}
 				}
