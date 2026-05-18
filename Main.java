@@ -19,7 +19,7 @@ organize the students and sessions for senior seminar
 public class Main{
 	public static void main (String[] args){
 		Schedule s1 = new Schedule();//create a schedule object
-		s1.schedule(false);// currently false so that program will make schedule
+		s1.menu(false);// currently false so that program will make schedule
 	}
 
 }

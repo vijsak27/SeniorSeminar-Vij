@@ -518,14 +518,14 @@ public class Schedule{
 		}
 		
 		//print statements for debugging
-		
+		/*
 		for(Student student: stuData){
 			System.out.println(student);
 		}
 		
 		System.out.println("Total Conflicts: "+totalConflicts+"\n\n");
 		return totalConflicts;
-		
+		*/
 		
 		
 	}
@@ -581,9 +581,9 @@ public class Schedule{
 		//assign students and get conflicts
 		int conflicts = assignStudents();
 		
-		showSessionRosters();
+		//showSessionRosters();
 		//print out master schedule
-		System.out.println(toString());
+		//System.out.println(toString());
 		
 		//print out how optimal the schedule is
 		System.out.println("Total Conflicts: "+ conflicts);
@@ -605,6 +605,26 @@ public class Schedule{
 		}
 		
 		return output;
+	}
+	
+	public void menu(boolean custom){
+		System.out.println("Welcome to Senior Seminar\n__________________________________");
+		System.out.println("Running Senior Seminar based on inputted file");
+		schedule(custom);
+		Scanner s1 = new Scanner(System.in);
+		
+		String response = "-1";
+		
+		while(!response.equals("q")){
+			System.out.println("1. See Master Schedule");
+			System.out.println("2. Print Session Rosters");
+			System.out.println("3. Find Particular Student By Name");
+			System.out.println("Enter 1, 2, 3, or q to quit");
+			response = s1.nextLine();
+			if(response.equals("1"))
+		}
+		
+		
 	}
 		
 }
