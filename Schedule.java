@@ -542,7 +542,7 @@ public class Schedule{
 			for(int session = 0; session<sessPerSlot; session++){
 				//print out the Slot, Session, and IDs of student
 				//the +1's in the next line are because in the code the slots begin at 0
-				System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRosters by Student IDs: ");
+				System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRoster by Student IDs: ");
 				for(Student student: schedule[slot][session].getStudents()){
 					System.out.print(student.getID()+" ");
 				}
