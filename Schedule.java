@@ -388,7 +388,7 @@ public class Schedule{
 					for(int room = 0; room<sessPerSlot; room++){
 						Session sessionAtCurrLocation = schedule[slot][room];
 						
-						if(sessionAtCurrLocation.getID()==choice && sessionAtCurrLocation.getNumStudents()<maxCapacity){
+						if(sessionAtCurrLocation!= null &&sessionAtCurrLocation.getID()==choice && sessionAtCurrLocation.getNumStudents()<maxCapacity){
 							
 							//keep track of the students added to the session
 							sessionAtCurrLocation.addStudent(currentStudent);
@@ -441,13 +441,13 @@ public class Schedule{
 					//loop through the student's current schedule and add a filler session											
 					for(int session = 0; session<currentStudent.getSchedule().size(); session++){
 							
-						if((currentStudent.getSchedule().get(session))==fillInSession.getID()){
+						if(fillInSession!=null&&((currentStudent.getSchedule().get(session))==fillInSession.getID())){
 							fillInSessionAlreadyTaken=true;
 						}
 					}
 						
 					//if not already taken and there is space add the student								
-					if(!fillInSessionAlreadyTaken && fillInSession.getNumStudents()<maxCapacity){
+					if(fillInSession!=null&&!fillInSessionAlreadyTaken && fillInSession.getNumStudents()<maxCapacity){
 						
 						//update the session by adding the student
 						fillInSession.addStudent(currentStudent);
@@ -486,7 +486,7 @@ public class Schedule{
 					if(!studentSlotTracker[studentIndex][slot]){
 							
 					for(int session = 0; session<sessPerSlot; session++){
-						if(schedule[slot][session].getNumStudents()<maxCapacity){
+						if(schedule[slot][session]!= null && schedule[slot][session].getNumStudents()<maxCapacity){
 									
 							//ensure that the student hasn't already aattended the session
 							boolean alreadyTaken = false;
@@ -540,15 +540,17 @@ public class Schedule{
 	public void showSessionRosters(){
 		for(int slot = 0; slot<numSlots; slot++){
 			for(int session = 0; session<sessPerSlot; session++){
-				//print out the Slot, Session, and IDs of student
-				//the +1's in the next line are because in the code the slots begin at 0
-				System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRoster by Student IDs: ");
-				for(Student student: schedule[slot][session].getStudents()){
-					System.out.print(student.getID()+" ");
-				}
-				//also print out the number of the students assigned to the session
-				System.out.println("Session size: "+schedule[slot][session].getNumStudents());
-				System.out.print("\n\n");
+				if(schedule[slot][session] != null){
+					//print out the Slot, Session, and IDs of student
+					//the +1's in the next line are because in the code the slots begin at 0
+					System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRoster by Student IDs: ");
+					for(Student student: schedule[slot][session].getStudents()){
+						System.out.print(student.getID()+" ");
+					}
+					//also print out the number of the students assigned to the session
+					System.out.println("Session size: "+schedule[slot][session].getNumStudents());
+					System.out.print("\n\n");
+				}	
 			}
 		}
 		
@@ -600,7 +602,12 @@ public class Schedule{
 		
 		for(int r = 0 ; r<numSlots;r++){
 			for(int c = 0 ; c<sessPerSlot; c++){
-				output+=(schedule[r][c].getID()+" ");
+				if(schedule[r][c]==null){
+					output += " _ ";
+				}
+				else{
+					output+=(schedule[r][c].getID()+" ");
+				}
 			}
 			output+=("\n");
 		}
