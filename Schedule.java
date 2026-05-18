@@ -608,6 +608,14 @@ public class Schedule{
 		return output;
 	}
 	
+	
+	/*
+	The menu() method runs the user interfacce for my program. It allows users with three options
+	These include seeing the master schedule, printing sessino rosters, and searching for a
+	particular student by name. This is the method that is called in the main class to run 
+	Senior Seminar
+	*/
+	
 	public void menu(boolean custom){
 		System.out.println("Welcome to Senior Seminar\n__________________________________");
 		System.out.println("Running Senior Seminar based on inputted file");
@@ -635,9 +643,9 @@ public class Schedule{
 				String name = s1.nextLine();
 				
 				for(Student s: stuData){
-					if(s.getName().equals(name)){
-						System.out.println("Student: "+name+ " ID: "+s.getID());
-						System.out.println("Schedule (Session IDs): "+s.getSchedule());
+					if(s.getName().toLowerCase().equals(name.toLowerCase())){
+						System.out.println("\n\nStudent: "+name+ " ID: "+s.getID());
+						System.out.println("Schedule (Session IDs): "+s.getSchedule()+"\n\n");
 					}
 				}
 			}
