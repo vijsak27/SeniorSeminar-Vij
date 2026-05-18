@@ -46,7 +46,7 @@ public class Schedule{
 	public void scheduleDetails(){
 		Scanner s1 = new Scanner(System.in);
 		
-		System.out.println("How many time slots are you offering?");
+		System.out.println("How many time slots are you offering? (MUST match data file)");
 		numSlots = s1.nextInt();
 		s1.nextLine();//clear buffer
 		
@@ -54,7 +54,7 @@ public class Schedule{
 		sessPerSlot = s1.nextInt();
 		s1.nextLine();//clear buffer
 		
-		System.out.println("How many sessions will you offer in total?");
+		System.out.println("How many sessions will you offer in total? (MUST match data file)");
 		numSessions = s1.nextInt();
 		s1.nextLine();//clear buffer
 		
