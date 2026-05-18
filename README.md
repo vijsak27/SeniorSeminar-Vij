@@ -82,7 +82,7 @@ At the end, I had an idea to consider the choice weighting to see if that would 
 In addition, I added in the user interface so that a user can interact with the program to organize the event and view rosters. My version of senior
 seminar does not include the limitation that every session must run once, so some speakers have not been included in the event (depenedning on specifications provided by user 
 and how the organizing end sup becuase of those speicifcations). Currently, the UI includes the ability to print out the master schedule, show 
-session rosters and print out specific student schedules.
+session rosters, prints out specific student schedules, and can print out schedules for speakers.
 
 Throughout the process of adding comments and reflecting on the design choices I made during the beginning of the project, I ended up making some changes to my code.
 I realized that adding priority ranking of the student should help the organization efficiency because each student with incredibly niche choices
