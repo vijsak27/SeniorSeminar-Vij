@@ -634,7 +634,8 @@ public class Schedule{
 		while(!response.equals("q")){
 			System.out.println("1. See Master Schedule");
 			System.out.println("2. Print Session Rosters");
-			System.out.println("3. Find Particular Student By Name");
+			System.out.println("3. Student Schedule By Name");
+			System.out.println("4. Presenter Schedule By Name");
 			System.out.println("Enter 1, 2, 3, or q to quit");
 			response = s1.nextLine();
 			if(response.equals("1")){
@@ -655,6 +656,20 @@ public class Schedule{
 						System.out.println("Schedule (Session IDs): "+s.getSchedule()+"\n\n");
 					}
 				}
+			}
+			else if (response.equals("4")){
+				System.out.println("Enter Presenter Name (must match data file): ");
+				String name = s1.nextLine();
+				
+				System.out.println("\n\n"+name+ "'s Schedule: ");
+				for(int r = 0; r<numSlots; r++){
+					for (int c = 0; c<sessPerSlot; c++){
+						if(schedule[r][c]!=null&&schedule[r][c].getPresenter().equals(name)){
+							System.out.println("Time Slot: "+(r+1)+ ", Session: "+schedule[r][c].getName());
+						}
+					}
+				}
+				System.out.println("\n\n");
 			}
 			else if(response.equals("q")){
 				response = "q";
