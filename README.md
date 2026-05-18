@@ -83,3 +83,9 @@ In addition, I added in the user interface so that a user can interact with the 
 seminar does not include the limitation that every session must run once, so some speakers have not been included in the event (depenedning on specifications provided by user 
 and how the organizing end sup becuase of those speicifcations). Currently, the UI includes the ability to print out the master schedule, show 
 session rosters and print out specific student schedules.
+
+Throughout the process of adding comments and reflecting on the design choices I made during the beginning of the project, I ended up making some changes to my code.
+I realized that adding priority ranking of the student should help the organization efficiency because each student with incredibly niche choices
+was getting filled into unwanted sessions because the overflows from the popular sessions were filling up the less popular sessions and creating more conflicts
+for the students that actually wanted those less popular courses. Thus, I added in a method called prioritySortStudents() which looks at the first choice
+of each student and ranks them based on the popularity from least to most popular choices.
