@@ -63,7 +63,6 @@ public class Schedule{
 		
 		schedule = new Session[numSlots][sessPerSlot]; //initialize the schedule 2D array with inputted values
 		
-		s1.close();
 		
 	}
 	
@@ -524,8 +523,10 @@ public class Schedule{
 		}
 		
 		System.out.println("Total Conflicts: "+totalConflicts+"\n\n");
-		return totalConflicts;
+		
 		*/
+		return totalConflicts;
+		
 		
 		
 	}
@@ -541,7 +542,7 @@ public class Schedule{
 			for(int session = 0; session<sessPerSlot; session++){
 				//print out the Slot, Session, and IDs of student
 				//the +1's in the next line are because in the code the slots begin at 0
-				System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRosterIDs: ");
+				System.out.println("Slot: "+(slot+1)+", Session: "+(session+1) + "\n\nRosters by Student IDs: ");
 				for(Student student: schedule[slot][session].getStudents()){
 					System.out.print(student.getID()+" ");
 				}
@@ -621,7 +622,31 @@ public class Schedule{
 			System.out.println("3. Find Particular Student By Name");
 			System.out.println("Enter 1, 2, 3, or q to quit");
 			response = s1.nextLine();
-			if(response.equals("1"))
+			if(response.equals("1")){
+				System.out.println("Master Scheulde");
+				System.out.println("Rows represent time slots; columns represent sessions in those slots");
+				System.out.println(this);
+			}
+			else if(response.equals("2")){
+				showSessionRosters();
+			}
+			else if(response.equals("3")){
+				System.out.println("Enter Student Name (must match data file): ");
+				String name = s1.nextLine();
+				
+				for(Student s: stuData){
+					if(s.getName().equals(name)){
+						System.out.println("Student: "+name+ " ID: "+s.getID());
+						System.out.println("Schedule (Session IDs): "+s.getSchedule());
+					}
+				}
+			}
+			else if(response.equals("q")){
+				response = "q";
+			}
+			else{
+				System.out.println("Invalid entry, try again");
+			}
 		}
 		
 		
