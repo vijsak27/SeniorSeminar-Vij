@@ -67,3 +67,25 @@ Today, I added in a customScheulde() method that allows a user to implement a cu
 I was also able to reduce the number of errors that arose during the optimization of the scheudle since I identified an error in the calcuation of the total conflicts. I was overcounting the number of conflicts because 5 students at the end of the list did not provide any choices.
 After I removed the error in the conflict calculcation, the number of conflicts identified fell to 114 and the average number of conflicts was about 1.5 per student. I am still encountering an error with student 68 in particular. The student is assigned twice in one session
 and only has assignments in 4/5 of the slots. I will continue to debug to correct this error and continue optimizatino across the different slots in order to reduce the conflicts further.
+
+
+Journal Entry 8 (5/16-5/17):
+
+Across these last two days, I made signifcant progress in finishing up the senior seminar project. I intially hit an optimized cofnlict count of 105
+across all of the 74 students. This initial methodology had some errors in its logic that allowed for one presenter to host more than
+one sessino during the same time slot which is not physically feasible since one presenter cannot be in two places at the same time. After
+correcting this error, I hit a finialized conflicts count of about 1.5 per student meaning that each student got a majority of their choices excepted 1-2 of them. 
+In comparison to my original approach to the problem, my thinking changed and evolved numerous times. I even switched to considering a completely randomized assigner
+and running a loop thousands of times to see what the lowest conflicts I could reach would be. Furthermore, I tried organzing by slot and by student.
+At the end, I had an idea to consider the choice weighting to see if that would decrease conflicts but that was not the case. 
+
+In addition, I added in the user interface so that a user can interact with the program to organize the event and view rosters. My version of senior
+seminar does not include the limitation that every session must run once, so some speakers have not been included in the event (depenedning on specifications provided by user 
+and how the organizing end sup becuase of those speicifcations). Currently, the UI includes the ability to print out the master schedule, show 
+session rosters and print out specific student schedules.
+
+Throughout the process of adding comments and reflecting on the design choices I made during the beginning of the project, I ended up making some changes to my code.
+I realized that adding priority ranking of the student should help the organization efficiency because each student with incredibly niche choices
+was getting filled into unwanted sessions because the overflows from the popular sessions were filling up the less popular sessions and creating more conflicts
+for the students that actually wanted those less popular courses. Thus, I added in a method called prioritySortStudents() which looks at the first choice
+of each student and ranks them based on the popularity from least to most popular choices.
