@@ -636,7 +636,8 @@ public class Schedule{
 			System.out.println("2. Print Session Rosters");
 			System.out.println("3. Student Schedule By Name");
 			System.out.println("4. Presenter Schedule By Name");
-			System.out.println("Enter 1, 2, 3, or q to quit");
+			System.out.println("5. Print All Student Schedules");
+			System.out.println("Enter 1, 2, 3, 4, 5, or q to quit");
 			response = s1.nextLine();
 			if(response.equals("1")){
 				System.out.println("Master Scheulde");
@@ -670,6 +671,11 @@ public class Schedule{
 					}
 				}
 				System.out.println("\n\n");
+			}
+			else if (response.equals("5")){
+				for(Student student: stuData){
+					System.out.println(student+"\n");
+				}
 			}
 			else if(response.equals("q")){
 				response = "q";
